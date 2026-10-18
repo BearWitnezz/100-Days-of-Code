@@ -1,0 +1,1 @@
+Day 3 proof project — Leak Triage Bot. Asks whether water is spraying or near electrical; if either is yes it’s an emergency and asks a follow-up about the house shutoff. Uses if/else, nested if statements, the or operator, and .lower() so answers work in any case.
