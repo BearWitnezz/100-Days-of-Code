@@ -1,0 +1,6 @@
+print("Welcome to the Job Split Calculator")
+job_total = float(input("What was the total amount for the job?\n$"))
+tax_percent = float(input("What was the tax percentage for the job?\n"))
+number_of_people = int(input("How many people are splitting the total?\n"))
+each_person_pays = (job_total / number_of_people) * (tax_percent / 100 + 1)
+print(f"Each person pays ${each_person_pays:.2f}")

@@ -1,0 +1,1 @@
+Day 2 proof project — Job Split Calculator. Asks for the job total, tax percentage, and number of people, then shows what each person pays with tax, to 2 decimal places. Uses float/int type conversion, math operators, and f-string formatting.
