@@ -1,0 +1,1 @@
+Day 1 proof project — Van Name Generator. Asks for your favorite tool and the street you grew up on, joins them with a space, and prints your plumbing van name. Uses print, input, variables, string concatenation, and f-strings.
