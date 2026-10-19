@@ -1,0 +1,1 @@
+Day 5 proof project — Parts Order Builder. Asks how many letters, numbers, and symbols you want, then uses for loops with range() and random.choice() to build a random parts order code. Easy version builds the code in order as a string. Hard version appends picks to a list, mixes them with random.shuffle(), then loops through the list to join it back into a string.
