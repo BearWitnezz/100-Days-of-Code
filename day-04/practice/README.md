@@ -1,0 +1,1 @@
+Day 4 proof project — Fitting Rock Paper Scissors. Wrench beats pipe, pipe beats plunger, plunger beats wrench. The computer picks with random.choice from a list; invalid choices are caught with `not in`, then if/elif/else decides tie, win, or lose. Uses random, lists, and conditionals.
