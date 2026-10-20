@@ -1,0 +1,1 @@
+Day 7 proof project — Guess the Fitting. Plumbing hangman that uses random.choice, a display list, a while loop with a game_over flag, and a for position in range(len(word)) loop to reveal letters. Lives are lost on wrong guesses.
