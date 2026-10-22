@@ -64,16 +64,6 @@
       "accent": "#b6f2a8"
     },
     {
-      "id": "drain-snake-simulator-rebuild",
-      "title": "Drain Snake Simulator (Rebuild)",
-      "day": 6,
-      "badge": "Rebuild",
-      "description": "The drain snake game, written again from memory.",
-      "howToPlay": "Type push or twist. Push moves one foot. Twist clears the clog only if you are on it.",
-      "entry": "../day-06/practice/drain_snake_simulator_rebuild.py",
-      "accent": "#ffd0a8"
-    },
-    {
       "id": "guess-the-fitting",
       "title": "Guess the Fitting",
       "day": 7,
@@ -81,26 +71,6 @@
       "howToPlay": "Type one letter at a time. A wrong letter costs a life. You start with 6.",
       "entry": "../day-07/practice/guess_the_fitting.py",
       "accent": "#c6d4ff"
-    },
-    {
-      "id": "guess-the-fitting-rebuild",
-      "title": "Guess the Fitting (Rebuild)",
-      "day": 7,
-      "badge": "Rebuild",
-      "description": "Guess the fitting again. A repeat guess does not cost a life.",
-      "howToPlay": "Type one letter at a time. Guessing a letter you already tried is free.",
-      "entry": "../day-07/practice/guess_the_fitting_rebuild.py",
-      "accent": "#ffc2ef"
-    },
-    {
-      "id": "guess-the-fitting-rebuild-2",
-      "title": "Guess the Fitting (Second Rebuild)",
-      "day": 7,
-      "badge": "Rebuild",
-      "description": "A second from-memory rebuild of Guess the Fitting.",
-      "howToPlay": "Type one letter at a time. Repeats are free. Six wrong letters and you lose.",
-      "entry": "../day-07/practice/guess_the_fitting_rebuild2.py",
-      "accent": "#b8f0ee"
     },
     {
       "id": "plumbing-job-estimator",
