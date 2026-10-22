@@ -82,15 +82,6 @@
       "accent": "#ffd0a8"
     },
     {
-      "id": "contractor-bid-board",
-      "title": "Contractor Bid Board",
-      "day": 9,
-      "description": "Collect contractor bids, then see who offered the most.",
-      "howToPlay": "Type a name, then a whole-number bid. Type yes for another contractor, or no to see the winner.",
-      "entry": "../day-09/practice/contractor_bid_board.py",
-      "accent": "#b8f0ee"
-    },
-    {
       "id": "plumbing-job-estimator",
       "title": "Plumbing Job Estimator",
       "dayLabel": "Days 1–8",
@@ -99,6 +90,15 @@
       "howToPlay": "Type a customer name, then how many feet of pipe. Type y to do another, or n to finish.",
       "entry": "../review-days-1-8/job_estimator.py",
       "accent": "#f8d49a"
+    },
+    {
+      "id": "contractor-bid-board",
+      "title": "Contractor Bid Board",
+      "day": 9,
+      "description": "Collect contractor bids, then see who offered the most.",
+      "howToPlay": "Type a name, then a whole-number bid. Type yes for another contractor, or no to see the winner.",
+      "entry": "../day-09/practice/contractor_bid_board.py",
+      "accent": "#b8f0ee"
     }
   ]
 }
