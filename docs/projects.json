@@ -1,0 +1,116 @@
+{
+  "projects": [
+    {
+      "id": "van-name-generator",
+      "title": "Van Name Generator",
+      "day": 1,
+      "description": "Name the van with your favorite tool and the street you grew up on.",
+      "howToPlay": "It asks for a tool, then a street. Press Go after each answer.",
+      "entry": "../day-01/practice/van_name_generator.py",
+      "accent": "#ffe14a"
+    },
+    {
+      "id": "job-split-calculator",
+      "title": "Job Split Calculator",
+      "day": 2,
+      "description": "Split a job's total, with tax, across the crew.",
+      "howToPlay": "Enter the job total, the tax percent, and how many people are splitting it.",
+      "entry": "../day-02/practice/job_split_calculator.py",
+      "accent": "#7ee0c6"
+    },
+    {
+      "id": "leak-triage-bot",
+      "title": "Leak Triage Bot",
+      "day": 3,
+      "description": "Decide if a leak is an emergency, then what to do next.",
+      "howToPlay": "Answer yes or no. Capital letters are fine.",
+      "entry": "../day-03/practice/leak_triage_bot.py",
+      "accent": "#ffb3c7"
+    },
+    {
+      "id": "fitting-rock-paper-scissors",
+      "title": "Fitting Rock Paper Scissors",
+      "day": 4,
+      "description": "Wrench, pipe, plunger. Can you beat the computer?",
+      "howToPlay": "Type wrench, pipe, or plunger. Wrench beats pipe, pipe beats plunger, plunger beats wrench.",
+      "entry": "../day-04/practice/fitting_rock_paper_scissors.py",
+      "accent": "#9dc7ff"
+    },
+    {
+      "id": "parts-order-builder-easy",
+      "title": "Parts Order Builder (In Order)",
+      "day": 5,
+      "description": "Build a parts order code: letters, then numbers, then symbols.",
+      "howToPlay": "Three whole numbers: how many letters, how many numbers, how many symbols.",
+      "entry": "../day-05/practice/parts_order_builder_easy.py",
+      "accent": "#ffbf80"
+    },
+    {
+      "id": "parts-order-builder-hard",
+      "title": "Parts Order Builder (Shuffled)",
+      "day": 5,
+      "description": "Build a parts order code, then shuffle the pieces.",
+      "howToPlay": "Same three questions as the in-order version. This one mixes the code up.",
+      "entry": "../day-05/practice/parts_order_builder_hard.py",
+      "accent": "#d4c2ff"
+    },
+    {
+      "id": "drain-snake-simulator",
+      "title": "Drain Snake Simulator",
+      "day": 6,
+      "description": "Snake a drain. Push toward the clog, then twist.",
+      "howToPlay": "Type push to move one foot, or twist to try the clog. The clog is 1 to 10 feet away.",
+      "entry": "../day-06/practice/drain_snake_simulator.py",
+      "accent": "#b6f2a8"
+    },
+    {
+      "id": "drain-snake-simulator-rebuild",
+      "title": "Drain Snake Simulator (Rebuild)",
+      "day": 6,
+      "badge": "Rebuild",
+      "description": "The drain snake game, written again from memory.",
+      "howToPlay": "Type push or twist. Push moves one foot. Twist clears the clog only if you are on it.",
+      "entry": "../day-06/practice/drain_snake_simulator_rebuild.py",
+      "accent": "#ffd0a8"
+    },
+    {
+      "id": "guess-the-fitting",
+      "title": "Guess the Fitting",
+      "day": 7,
+      "description": "Guess the secret plumbing fitting, one letter at a time.",
+      "howToPlay": "Type one letter at a time. A wrong letter costs a life. You start with 6.",
+      "entry": "../day-07/practice/guess_the_fitting.py",
+      "accent": "#c6d4ff"
+    },
+    {
+      "id": "guess-the-fitting-rebuild",
+      "title": "Guess the Fitting (Rebuild)",
+      "day": 7,
+      "badge": "Rebuild",
+      "description": "Guess the fitting again. A repeat guess does not cost a life.",
+      "howToPlay": "Type one letter at a time. Guessing a letter you already tried is free.",
+      "entry": "../day-07/practice/guess_the_fitting_rebuild.py",
+      "accent": "#ffc2ef"
+    },
+    {
+      "id": "guess-the-fitting-rebuild-2",
+      "title": "Guess the Fitting (Second Rebuild)",
+      "day": 7,
+      "badge": "Rebuild",
+      "description": "A second from-memory rebuild of Guess the Fitting.",
+      "howToPlay": "Type one letter at a time. Repeats are free. Six wrong letters and you lose.",
+      "entry": "../day-07/practice/guess_the_fitting_rebuild2.py",
+      "accent": "#b8f0ee"
+    },
+    {
+      "id": "plumbing-job-estimator",
+      "title": "Plumbing Job Estimator",
+      "dayLabel": "Days 1–8",
+      "badge": "Milestone",
+      "description": "A full job estimate that uses a skill from every day so far.",
+      "howToPlay": "Type a customer name, then how many feet of pipe. Type y to do another, or n to finish.",
+      "entry": "../review-days-1-8/job_estimator.py",
+      "accent": "#f8d49a"
+    }
+  ]
+}

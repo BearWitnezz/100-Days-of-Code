@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play · Plumber to Programmer Arcade</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="play" data-status="loading" data-run="0">
+  <a class="skip" href="#terminal">Skip to the game</a>
+  <header class="top">
+    <div class="wrap">
+      <a class="back" href="index.html">← All games</a>
+      <a class="brand-name" href="index.html">Plumber to Programmer</a>
+    </div>
+  </header>
+  <main class="stage wrap">
+    <p class="kicker" id="kicker"></p>
+    <h1 id="title">Loading the game…</h1>
+    <p class="lede" id="description"></p>
+    <p class="howto" id="howto"></p>
+    <p class="file-path" id="file-path"></p>
+    <p class="page-error" id="page-error" hidden></p>
+
+    <section class="callout" id="fallback" hidden>
+      <p id="fallback-reason"></p>
+      <a class="big-link" id="fallback-link" target="_blank" rel="noopener noreferrer"></a>
+    </section>
+
+    <section class="terminal" id="terminal" aria-label="Game terminal">
+      <div class="term-chrome">
+        <span class="dot r"></span>
+        <span class="dot y"></span>
+        <span class="dot g"></span>
+        <span class="term-title" id="term-title">python</span>
+      </div>
+      <div class="term-scroll" id="term-scroll" role="log" aria-label="Program output">
+        <div id="term-live">
+          <pre id="term-out">First game takes a moment. Python is downloading.</pre>
+          <p id="term-prompt" hidden></p>
+          <pre id="term-error" hidden></pre>
+          <p id="term-done" hidden>Program finished.</p>
+        </div>
+      </div>
+      <form class="composer" id="composer" hidden>
+        <label class="sr-only" id="answer-label" for="answer">Your answer</label>
+        <div class="composer-row">
+          <span class="caret" aria-hidden="true">&gt;</span>
+          <input id="answer" name="answer" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" enterkeyhint="go" placeholder="Type here">
+          <button type="submit" id="go">Go</button>
+        </div>
+      </form>
+    </section>
+    <p class="hint" id="hint">First game takes a moment. Python is downloading.</p>
+    <div class="actions">
+      <button type="button" id="undo" hidden>Undo last answer</button>
+      <button type="button" id="restart" hidden>Start over</button>
+      <button type="button" id="toggle-code" hidden aria-expanded="false" aria-controls="code-panel">View the code</button>
+    </div>
+    <section class="code-panel" id="code-panel" hidden>
+      <div class="code-bar">
+        <select id="code-picker" hidden></select>
+        <span id="code-name"></span>
+        <button type="button" id="copy">Copy the code</button>
+      </div>
+      <pre id="code"><code id="code-text"></code></pre>
+    </section>
+  </main>
+  <script defer src="https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"></script>
+  <script defer src="play.js"></script>
+  <noscript>This page needs JavaScript to run the Python program.</noscript>
+</body>
+</html>
