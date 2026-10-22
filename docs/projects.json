@@ -73,6 +73,16 @@
       "accent": "#c6d4ff"
     },
     {
+      "id": "secret-work-order-code-rebuild",
+      "title": "Secret Work Order Code (Day 8 rebuild)",
+      "day": 8,
+      "badge": "Rebuild",
+      "description": "Encode or decode a plumbing work order. Written from memory, with a few hints.",
+      "howToPlay": "Type encode or decode, then the message, then a shift number. Type n to quit. A wrong first answer asks you to try again.",
+      "entry": "../day-08/practice/secret_work_order_code_rebuild.py",
+      "accent": "#ffd0a8"
+    },
+    {
       "id": "plumbing-job-estimator",
       "title": "Plumbing Job Estimator",
       "dayLabel": "Days 1–8",
