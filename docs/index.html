@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plumber to Programmer Arcade</title>
+  <meta name="description" content="Play John's practice Python programs from 100 Days of Code, right in the browser.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#grid">Skip to the games</a>
+  <header class="site-header">
+    <div class="wrap brand-row">
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="4" y="26" width="32" height="14" rx="7" fill="#3aa0c9" stroke="#24160f" stroke-width="3"/>
+        <rect x="26" y="6" width="14" height="34" rx="7" fill="#f08a24" stroke="#24160f" stroke-width="3"/>
+        <circle cx="50" cy="16" r="9" fill="#ffe14a" stroke="#24160f" stroke-width="3"/>
+      </svg>
+      <div>
+        <p class="daychip">100 Days of Code</p>
+        <h1>Plumber to Programmer Arcade</h1>
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="lede">Little Python games John wrote while learning to code. Click a card and play the real program in the browser.</p>
+      <p class="count" id="count">Lining up the games…</p>
+    </div>
+  </header>
+  <main class="wrap">
+    <p class="page-error" id="page-error" hidden></p>
+    <div class="grid" id="grid"></div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>These cards are John's own practice projects and milestones. Lesson copies stay in the day folders for studying.</p>
+      <p><a href="ADDING_A_GAME.md">How to add a game</a> · <a href="../flashcards/index.html">Flashcards</a></p>
+    </div>
+  </footer>
+  <script src="home.js"></script>
+  <noscript>This arcade needs JavaScript so it can load the game list.</noscript>
+</body>
+</html>
