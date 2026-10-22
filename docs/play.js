@@ -176,6 +176,7 @@ async function runGame(focusInput) {
   try {
     const pyodide = await ensurePyodide();
     if (ticket !== runId) return;
+    writeFs(pyodide, baseName(project.entry), files[0].text);
     for (const file of files) {
       if (file.path) writeFs(pyodide, file.path, file.text);
     }

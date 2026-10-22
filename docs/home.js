@@ -58,10 +58,6 @@ function cardFor(project, index) {
   link.appendChild(el("h2", null, project.title));
   link.appendChild(el("p", "desc", project.description || ""));
   link.appendChild(el("p", "play-label", isPlayable(project) ? "Play →" : "How to run it →"));
-
-  const mark = el("p", "watermark", dayNum(project));
-  mark.setAttribute("aria-hidden", "true");
-  link.appendChild(mark);
   return link;
 }
 
@@ -73,11 +69,6 @@ function dayText(project) {
   if (project.dayLabel) return project.dayLabel;
   if (typeof project.day === "number") return "Day " + project.day;
   return "Game";
-}
-
-function dayNum(project) {
-  if (typeof project.day === "number") return String(project.day).padStart(2, "0");
-  return "★";
 }
 
 function safeColor(value, index) {

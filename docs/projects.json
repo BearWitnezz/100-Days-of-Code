@@ -77,7 +77,7 @@
       "id": "guess-the-fitting",
       "title": "Guess the Fitting",
       "day": 7,
-      "description": "Hangman, but the secret word is a plumbing fitting.",
+      "description": "Guess the secret plumbing fitting, one letter at a time.",
       "howToPlay": "Type one letter at a time. A wrong letter costs a life. You start with 6.",
       "entry": "../day-07/practice/guess_the_fitting.py",
       "accent": "#c6d4ff"
