@@ -306,6 +306,18 @@ h1 {
   font-size: 0.98rem;
 }
 
+/* The calculator logo is one wide picture. Keep each row intact and let the terminal scroll. */
+body[data-project="calculator"] .terminal,
+body[data-project="calculator"] .code-panel {
+  max-width: 100%;
+}
+
+body[data-project="calculator"] #term-out,
+body[data-project="calculator"] #code {
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
 #term-prompt { color: var(--gold); margin-top: 8px; }
 #term-error { color: #ffb4a8; margin-top: 10px; }
 #term-done { color: #9ad1ff; margin-top: 10px; }
