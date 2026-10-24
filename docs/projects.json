@@ -99,6 +99,18 @@
       "howToPlay": "Type a name, then a whole-number bid. Type yes for another contractor, or no to see the winner.",
       "entry": "../day-09/practice/contractor_bid_board.py",
       "accent": "#b8f0ee"
+    },
+    {
+      "id": "calculator",
+      "title": "Calculator",
+      "day": 10,
+      "description": "Add, subtract, multiply, or divide, then keep going with the result.",
+      "howToPlay": "Type a number, then + - * or /, then another number. Type y to continue with the result, or n to start fresh.",
+      "entry": "../day-10/calculator.py",
+      "files": [
+        { "path": "art.py", "src": "../day-10/art.py" }
+      ],
+      "accent": "#ffc2ef"
     }
   ]
 }
