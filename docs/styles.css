@@ -306,14 +306,18 @@ h1 {
   font-size: 0.98rem;
 }
 
-/* The calculator logo is one wide picture. Keep each row intact and let the terminal scroll. */
+/* The calculator and blackjack logos are one wide picture. Keep each row intact and let the terminal scroll. */
 body[data-project="calculator"] .terminal,
-body[data-project="calculator"] .code-panel {
+body[data-project="calculator"] .code-panel,
+body[data-project="blackjack"] .terminal,
+body[data-project="blackjack"] .code-panel {
   max-width: 100%;
 }
 
 body[data-project="calculator"] #term-out,
-body[data-project="calculator"] #code {
+body[data-project="calculator"] #code,
+body[data-project="blackjack"] #term-out,
+body[data-project="blackjack"] #code {
   white-space: pre;
   overflow-wrap: normal;
 }
