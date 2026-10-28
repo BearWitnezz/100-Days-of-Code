@@ -70,6 +70,7 @@ pre{background:#0b1220;border:1px solid #334155;border-radius:10px;padding:14px 
 </div>
 <div class="controls">
   <button class="ghost" onclick="copyDone()">Copy completion for Practice Coach</button>
+  <button onclick="markAll()">Mark all as reviewed</button>
   <button onclick="resetDone()">Reset progress</button>
 </div>
 <div class="count" id="done"></div>
@@ -98,6 +99,7 @@ function show(){const c=document.getElementById('card');c.classList.remove('flip
 function flip(){const c=document.getElementById('card');c.classList.toggle('flipped');if(c.classList.contains('flipped')&&list.length){seen.add(ck(list[i]));upd()}}
 function upd(){done.textContent='Reviewed '+list.filter(k=>seen.has(ck(k))).length+' of '+list.length+' cards (a card counts once you flip it)'}
 function resetDone(){seen=new Set();upd()}
+function markAll(){list.forEach(k=>seen.add(ck(k)));upd()}
 function copyDone(){const n=list.filter(k=>seen.has(ck(k))).length,days=sel.has('all')?'all days':'Day '+[...sel].sort((a,b)=>a-b).join(', ');const s=`Flashcards (${days}): ${n}/${list.length} reviewed\n`;navigator.clipboard.writeText(s).then(()=>alert('Copied! Paste it into the chat with Practice Coach.'),()=>prompt('Copy this:',s));}
 function move(n){if(!list.length)return;i=(i+n+list.length)%list.length;show()}
 function shuffle(){for(let j=list.length-1;j>0;j--){const r=Math.floor(Math.random()*(j+1));[list[j],list[r]]=[list[r],list[j]]}i=0;show()}
