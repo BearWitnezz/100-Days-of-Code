@@ -111,6 +111,18 @@
         { "path": "art.py", "src": "../day-10/art.py" }
       ],
       "accent": "#ffc2ef"
+    },
+    {
+      "id": "blackjack",
+      "title": "Blackjack",
+      "day": 11,
+      "description": "Play a hand of Blackjack against the computer without going over 21.",
+      "howToPlay": "Type y to play or n to quit. Type y to take another card or n to pass. After the hand, type y to play again or n to stop.",
+      "entry": "../day-11/practice/blackjack.py",
+      "files": [
+        { "path": "art.py", "src": "../day-11/practice/art.py" }
+      ],
+      "accent": "#d7f08a"
     }
   ]
 }

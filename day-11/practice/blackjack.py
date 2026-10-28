@@ -43,6 +43,33 @@ def blackjack():
     while not game_over:
         if current_score != 21:
             another_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
+            if another_card == 'y':
+                your_cards.append(random.choice(cards))
+                current_score = sum(your_cards)
+                while current_score > 21 and 11 in your_cards:
+                    your_cards[your_cards.index(11)] = 1
+                    current_score = sum(your_cards)
+                if current_score > 21:
+                    game_over = True
+                    print(f"    Your final hand: {your_cards}, final score: {current_score}")
+                    print(f"    Computer's final hand: {computers_cards}, final score: {computers_current_score}")
+                    print("You lose 😤")
+                else:
+                    print(f"    Your cards: {your_cards}, current score: {current_score}")
+                    print(f"    Computer's first card: {computers_first_card}")
+            elif another_card == 'n':
+                computers_cards, computers_current_score = computers_turn(computers_cards, computers_current_score)
+                game_over = True
+                print(f"    Your final hand: {your_cards}, final score: {current_score}")
+                print(f"    Computer's final hand: {computers_cards}, final score: {computers_current_score}")
+                if computers_current_score > 21:
+                    print("Opponent went over. You win 😁")
+                elif computers_current_score == current_score:
+                    print("Draw 🙃")
+                elif computers_current_score < current_score:
+                    print("You win 😃")
+                else:
+                    print("You lose 😤")
         if current_score == 21:
             game_over = True
             computers_cards, computers_current_score = computers_turn(computers_cards, computers_current_score)
@@ -52,33 +79,6 @@ def blackjack():
                 print("Draw 🙃")
             else:
                 print("You win 😃")
-        elif another_card == 'y':
-            your_cards.append(random.choice(cards))
-            current_score = sum(your_cards)
-            while current_score > 21 and 11 in your_cards:
-                your_cards[your_cards.index(11)] = 1
-                current_score = sum(your_cards)
-            if current_score > 21:
-                game_over = True
-                print(f"    Your final hand: {your_cards}, final score: {current_score}")
-                print(f"    Computer's final hand: {computers_cards}, final score: {computers_current_score}")
-                print("You lose 😤")
-            else:
-                print(f"    Your cards: {your_cards}, current score: {current_score}")
-                print(f"    Computer's first card: {computers_first_card}")
-        elif another_card == 'n':
-            computers_cards, computers_current_score = computers_turn(computers_cards, computers_current_score)
-            game_over = True
-            print(f"    Your final hand: {your_cards}, final score: {current_score}")
-            print(f"    Computer's final hand: {computers_cards}, final score: {computers_current_score}")
-            if computers_current_score > 21:
-                print("Opponent went over. You win 😁")
-            elif computers_current_score == current_score:
-                print("Draw 🙃")
-            elif computers_current_score < current_score:
-                print("You win 😃")
-            else:
-                print("You lose 😤")
     begin()
 
 begin()
