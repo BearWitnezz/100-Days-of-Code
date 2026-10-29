@@ -123,6 +123,18 @@
         { "path": "art.py", "src": "../day-11/practice/art.py" }
       ],
       "accent": "#d7f08a"
+    },
+    {
+      "id": "number-guessing",
+      "title": "Number Guessing Game",
+      "day": 12,
+      "description": "Guess a secret number between 1 and 100 before your guesses run out.",
+      "howToPlay": "Type easy for 10 guesses or hard for 5. Then type a whole number each time it asks you to guess.",
+      "entry": "../day-12/practice/number_guessing.py",
+      "files": [
+        { "path": "art.py", "src": "../day-12/practice/art.py" }
+      ],
+      "accent": "#67e8f9"
     }
   ]
 }
