@@ -3,6 +3,8 @@ import random
 from art import logo
 from art import vs
 from game_data import data
+def format_account(account):
+    return f"{account["name"]}, {account["description"]}, {account["country"]}"
 game_over = False
 print(logo)
 score = 0
@@ -10,10 +12,8 @@ account_a = random.choice(data)
 account_b = random.choice(data)
 while account_a == account_b:
     account_b = random.choice(data)
-# print(account_a)
-# print(account_b)
-compare_a = f"{account_a["name"]}, {account_a["description"]}, {account_a["country"]}"
-compare_b = f"{account_b["name"]}, {account_b["description"]}, {account_b["country"]}"
+compare_a = format_account(account_a)
+compare_b = format_account(account_b)
 print(f"Compare A: {compare_a}")
 print(vs)
 print(f"Against B: {compare_b}")
@@ -32,7 +32,7 @@ while not game_over:
             account_b = random.choice(data)
             while account_a == account_b:
                 account_b = random.choice(data)
-            compare_b = f"{account_b["name"]}, {account_b["description"]}, {account_b["country"]}"
+            compare_b = format_account(account_b)
             print(f"Against B: {compare_b}")
         else:
             if account_a["follower_count"] < account_b["follower_count"]:
@@ -51,7 +51,7 @@ while not game_over:
             account_b = random.choice(data)
             while account_a == account_b:
                 account_b = random.choice(data)
-            compare_b = f"{account_b["name"]}, {account_b["description"]}, {account_b["country"]}"
+            compare_b = format_account(account_b)
             print(f"Against B: {compare_b}")
         else:
             if account_a["follower_count"] > account_b["follower_count"]:
