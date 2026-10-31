@@ -135,6 +135,19 @@
         { "path": "art.py", "src": "../day-12/practice/art.py" }
       ],
       "accent": "#67e8f9"
+    },
+    {
+      "id": "higher-lower",
+      "title": "Higher Lower",
+      "day": 14,
+      "description": "Guess which account has more followers.",
+      "howToPlay": "Type A or B for the account with more followers. Capital letters are fine.",
+      "entry": "../day-14/main.py",
+      "files": [
+        { "path": "art.py", "src": "../day-14/art.py" },
+        { "path": "game_data.py", "src": "../day-14/game_data.py" }
+      ],
+      "accent": "#ff8b6a"
     }
   ]
 }
