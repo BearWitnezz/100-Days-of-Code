@@ -148,6 +148,15 @@
         { "path": "game_data.py", "src": "../day-14/game_data.py" }
       ],
       "accent": "#ff8b6a"
+    },
+    {
+      "id": "coffee-machine",
+      "title": "Coffee Machine",
+      "day": 15,
+      "description": "Order an espresso, latte, or cappuccino if the machine has enough left.",
+      "howToPlay": "Type espresso, latte, or cappuccino, then how many of each coin. Type report for what's left, or off to stop.",
+      "entry": "../day-15/main.py",
+      "accent": "#e0a15a"
     }
   ]
 }
