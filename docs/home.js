@@ -46,18 +46,26 @@ function cardFor(project, index) {
   const link = document.createElement("a");
   link.className = "card";
   link.href = "play.html?id=" + encodeURIComponent(project.id);
-  link.style.backgroundColor = safeColor(project.accent, index);
+  link.style.setProperty("--accent", safeColor(project.accent, index));
   link.dataset.projectId = project.id;
 
+  const marquee = document.createElement("div");
+  marquee.className = "marquee";
   const top = document.createElement("div");
   top.className = "card-top";
   top.appendChild(el("p", "daychip", dayText(project)));
   if (project.badge) top.appendChild(el("p", "badge", project.badge));
-  link.appendChild(top);
+  marquee.appendChild(top);
+  marquee.appendChild(el("h2", null, project.title));
 
-  link.appendChild(el("h2", null, project.title));
-  link.appendChild(el("p", "desc", project.description || ""));
-  link.appendChild(el("p", "play-label", isPlayable(project) ? "Play →" : "How to run it →"));
+  const screen = document.createElement("div");
+  screen.className = "screen";
+  screen.appendChild(el("p", "desc", project.description || ""));
+
+  const label = el("p", "play-label", isPlayable(project) ? "Insert coin" : "How to run it");
+  if (!isPlayable(project)) label.classList.add("is-manual");
+
+  link.append(marquee, screen, label);
   return link;
 }
 
