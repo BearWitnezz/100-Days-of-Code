@@ -5,23 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Plumber to Programmer Arcade</title>
   <meta name="description" content="Play John's practice Python programs from 100 Days of Code, right in the browser.">
+  <meta name="theme-color" content="#09070f">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="crt-overlay" aria-hidden="true"></div>
   <a class="skip" href="#grid">Skip to the games</a>
   <header class="site-header">
     <div class="wrap brand-row">
       <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-        <rect x="4" y="26" width="32" height="14" rx="7" fill="#3aa0c9" stroke="#24160f" stroke-width="3"/>
-        <rect x="26" y="6" width="14" height="34" rx="7" fill="#f08a24" stroke="#24160f" stroke-width="3"/>
-        <circle cx="50" cy="16" r="9" fill="#ffe14a" stroke="#24160f" stroke-width="3"/>
+        <rect x="2" y="2" width="60" height="60" rx="14" fill="#14081f" stroke="#3dfff3" stroke-width="3"/>
+        <rect x="8" y="28" width="30" height="12" rx="6" fill="#3dfff3"/>
+        <rect x="26" y="10" width="12" height="30" rx="6" fill="#ff2bd6"/>
+        <circle cx="48" cy="18" r="7" fill="#ffe14a"/>
       </svg>
       <div>
-        <p class="daychip">100 Days of Code</p>
+        <p class="daychip"><span class="blink" aria-hidden="true"></span>100 Days of Code</p>
         <h1>Plumber to Programmer Arcade</h1>
       </div>
     </div>
