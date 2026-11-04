@@ -10,3 +10,9 @@ Student of Dr. Angela Yu
 Flashcards and pop quizzes for the days you've finished:
 
 [https://bearwitnezz.github.io/100-Days-of-Code/flashcards/](https://bearwitnezz.github.io/100-Days-of-Code/flashcards/)
+
+## Brick by Brick
+
+One brick for every course day of 100 Days of Python:
+
+[https://bearwitnezz.github.io/100-Days-of-Code/docs/pyramid/](https://bearwitnezz.github.io/100-Days-of-Code/docs/pyramid/)

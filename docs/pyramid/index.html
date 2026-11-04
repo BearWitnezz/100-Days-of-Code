@@ -417,9 +417,83 @@
       text-decoration: none;
     }
 
+    .set-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: min(440px, 100%);
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(58, 29, 10, 0.22);
+    }
+
+    .set-title {
+      margin: 0;
+      color: #3a1d0a;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .set-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .set-day input {
+      width: 5.5rem;
+      min-height: 48px;
+      padding: 8px 10px;
+      border: 2px solid #3a1d0a;
+      border-radius: 8px;
+      background: #fff6e4;
+      color: #3a1d0a;
+      font-family: inherit;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .set-btn {
+      min-height: 48px;
+      padding: 0 22px;
+      border: 2px solid #3a1d0a;
+      border-radius: 8px;
+      background: #fff6e4;
+      color: #3a1d0a;
+      font-family: inherit;
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .set-btn:hover:not(:disabled) { background: #fff; }
+
+    .set-btn:disabled,
+    .set-day input:disabled {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .set-hint {
+      margin: 0;
+      max-width: 28em;
+      color: #4a2810;
+      font-size: 13.5px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
     .back:focus-visible,
     .lay:focus-visible,
     .undo:focus-visible,
+    .set-btn:focus-visible,
+    .set-day input:focus-visible,
     .cell:focus-visible {
       outline: 3px solid #fff6d2;
       outline-offset: 3px;
@@ -565,6 +639,7 @@
       h1 { letter-spacing: 0.06em; }
       header { padding-inline: 12px; }
       .lay { letter-spacing: 0.08em; padding-inline: 16px; }
+      .set-title { letter-spacing: 0.04em; }
       .stats p { font-size: 15px; }
     }
   </style>
@@ -601,6 +676,14 @@
   <div class="actions">
     <button class="lay" id="lay" type="button">I FINISHED A COURSE DAY</button>
     <button class="undo" id="undo" type="button">Undo last brick</button>
+    <form class="set-day" id="set-form" novalidate>
+      <label class="set-title" for="day-input">Set your current day</label>
+      <div class="set-row">
+        <input id="day-input" name="day" type="number" min="0" max="100" step="1" inputmode="numeric" required aria-describedby="set-hint">
+        <button class="set-btn" id="set-btn" type="submit">Set</button>
+      </div>
+      <p class="set-hint" id="set-hint">Lays bricks up to this day, or clears the ones above it.</p>
+    </form>
   </div>
 
   <div class="tip" id="tip" role="tooltip" hidden></div>
@@ -613,7 +696,6 @@
     const TOTAL = 100;
     const BASE = 13;
     const STORAGE_KEY = "brick-by-brick";
-    const SEED_COUNT = 15;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const model = buildModel();
@@ -625,6 +707,9 @@
     const bannerEl = document.getElementById("banner");
     const layBtn = document.getElementById("lay");
     const undoBtn = document.getElementById("undo");
+    const setForm = document.getElementById("set-form");
+    const dayInput = document.getElementById("day-input");
+    const setBtn = document.getElementById("set-btn");
     const tipEl = document.getElementById("tip");
     const liveEl = document.getElementById("live");
     const motesEl = document.getElementById("motes");
@@ -638,6 +723,7 @@
 
     layBtn.addEventListener("click", layBrick);
     undoBtn.addEventListener("click", undoBrick);
+    setForm.addEventListener("submit", onSetDay);
     window.addEventListener("resize", () => requestAnimationFrame(layout));
     window.addEventListener("scroll", hideTip, { passive: true });
 
@@ -734,7 +820,7 @@
     }
 
     function seed() {
-      return { count: SEED_COUNT, dates: Array(SEED_COUNT).fill(null) };
+      return { count: 0, dates: [] };
     }
 
     function save() {
@@ -750,7 +836,7 @@
     }
 
     function clampCount(value) {
-      if (!Number.isFinite(value)) return SEED_COUNT;
+      if (!Number.isFinite(value)) return 0;
       return Math.max(0, Math.min(TOTAL, Math.floor(value)));
     }
 
@@ -770,6 +856,37 @@
         if (!reduceMotion) celebrate();
       } else {
         announce("Laid day " + state.count + ". " + (TOTAL - state.count) + " bricks to complete the pyramid.");
+      }
+    }
+
+    function onSetDay(event) {
+      event.preventDefault();
+      if (busy) return;
+      const raw = dayInput.value.trim();
+      const parsed = Number(raw);
+      if (raw === "" || Number.isNaN(parsed)) {
+        dayInput.value = String(state.count);
+        return;
+      }
+      setCurrentDay(parsed);
+    }
+
+    function setCurrentDay(value) {
+      if (busy) return;
+      const next = clampCount(value);
+      const previous = state.count;
+      if (next < previous) state.dates = state.dates.slice(0, next);
+      while (state.dates.length < next) state.dates.push(null);
+      state.count = next;
+      save();
+      paint();
+      layout();
+      if (previous < TOTAL && next === TOTAL) {
+        announce("Pyramid complete.");
+        if (!reduceMotion) celebrate();
+      } else if (next !== previous) {
+        const left = TOTAL - next;
+        announce("Set to day " + next + ". " + left + (left === 1 ? " brick" : " bricks") + " to complete the pyramid.");
       }
     }
 
@@ -807,6 +924,8 @@
 
     function paint(options) {
       const animateDay = options && options.animateDay;
+      hideTip();
+      if (state.count < TOTAL) motesEl.replaceChildren();
       document.body.classList.toggle("complete", state.count === TOTAL);
       document.body.dataset.count = String(state.count);
       subtitleEl.textContent = subtitle(state.count);
@@ -834,6 +953,9 @@
       renderStats();
       layBtn.disabled = busy || state.count >= TOTAL;
       undoBtn.disabled = busy || state.count <= 0;
+      setBtn.disabled = busy;
+      dayInput.disabled = busy;
+      if (document.activeElement !== dayInput) dayInput.value = String(state.count);
       layBtn.textContent = state.count >= TOTAL ? "PYRAMID COMPLETE" : "I FINISHED A COURSE DAY";
     }
 
@@ -881,15 +1003,15 @@
     function tipForDay(day) {
       if (day > state.count) return "Day " + day + ", not laid yet";
       const iso = state.dates[day - 1];
-      if (!iso) return "Day " + day + ", laid before tracking";
+      if (!iso) return "Day " + day;
       return "Day " + day + ", laid " + prettyDate(iso);
     }
 
     function lastLaidLabel() {
-      if (state.count <= 0) return "—";
-      const iso = state.dates[state.count - 1];
-      if (!iso) return "before tracking";
-      return prettyDate(iso);
+      for (let i = state.dates.length - 1; i >= 0; i -= 1) {
+        if (state.dates[i]) return prettyDate(state.dates[i]);
+      }
+      return "—";
     }
 
     function streakLabel(dates) {
@@ -988,7 +1110,7 @@
       let bh = Math.max(8, Math.round(bw * 0.46));
       const bannerSpace = state.count === TOTAL ? 52 : 0;
       const statsSpace = narrow ? statsEl.offsetHeight + 16 : 0;
-      const used = header.offsetHeight + actions.offsetHeight + statsSpace + bannerSpace + 24;
+      const used = header.offsetHeight + actions.offsetHeight + statsSpace + bannerSpace + 48;
       const availH = window.innerHeight - used;
       const natural = rowCount * bh + (rowCount - 1) * gap;
       if (availH > 140 && natural > availH) {
