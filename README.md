@@ -7,6 +7,6 @@ Student of Dr. Angela Yu
 
 ## Study page
 
-Flashcards and pop quizzes for the days you've finished:
+Flashcards and pop quizzes for the days I've finished:
 
 [https://bearwitnezz.github.io/100-Days-of-Code/flashcards/](https://bearwitnezz.github.io/100-Days-of-Code/flashcards/)
