@@ -115,7 +115,7 @@ function paintHeading() {
   if (project.badge) parts.push(project.badge);
   els.kicker.textContent = parts.join(" · ");
   els.title.textContent = project.title;
-  document.title = project.title + " · Plumber to Programmer Arcade";
+  document.title = project.title + " · Plumber to Indie Developer Arcade";
   els.description.textContent = project.description || "";
   els.howto.textContent = project.howToPlay || "";
   const pretty = prettyPath(project.entry || "");
