@@ -269,17 +269,10 @@ h1 {
 
 .card-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.card .daychip {
-  color: #f7fff8;
-  font-size: 1.2rem;
-  letter-spacing: 0.06em;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
 }
 
 .badge {

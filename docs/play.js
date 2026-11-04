@@ -109,11 +109,12 @@ async function init() {
 }
 
 function paintHeading() {
-  const parts = [];
-  if (project.dayLabel) parts.push(project.dayLabel);
-  else if (typeof project.day === "number") parts.push("Day " + project.day);
-  if (project.badge) parts.push(project.badge);
-  els.kicker.textContent = parts.join(" · ");
+  if (typeof project.day === "number") document.body.dataset.day = String(project.day);
+  else delete document.body.dataset.day;
+  if (project.dayLabel) document.body.dataset.dayLabel = project.dayLabel;
+  else delete document.body.dataset.dayLabel;
+  els.kicker.textContent = project.badge || "";
+  els.kicker.hidden = !project.badge;
   els.title.textContent = project.title;
   document.title = project.title + " · Plumber to Indie Developer Arcade";
   els.description.textContent = project.description || "";

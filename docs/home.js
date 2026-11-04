@@ -48,14 +48,17 @@ function cardFor(project, index) {
   link.href = "play.html?id=" + encodeURIComponent(project.id);
   link.style.setProperty("--accent", safeColor(project.accent, index));
   link.dataset.projectId = project.id;
+  if (typeof project.day === "number") link.dataset.day = String(project.day);
+  if (project.dayLabel) link.dataset.dayLabel = project.dayLabel;
 
   const marquee = document.createElement("div");
   marquee.className = "marquee";
-  const top = document.createElement("div");
-  top.className = "card-top";
-  top.appendChild(el("p", "daychip", dayText(project)));
-  if (project.badge) top.appendChild(el("p", "badge", project.badge));
-  marquee.appendChild(top);
+  if (project.badge) {
+    const top = document.createElement("div");
+    top.className = "card-top";
+    top.appendChild(el("p", "badge", project.badge));
+    marquee.appendChild(top);
+  }
   marquee.appendChild(el("h2", null, project.title));
 
   const screen = document.createElement("div");
@@ -71,12 +74,6 @@ function cardFor(project, index) {
 
 function isPlayable(project) {
   return project.playable !== false;
-}
-
-function dayText(project) {
-  if (project.dayLabel) return project.dayLabel;
-  if (typeof project.day === "number") return "Day " + project.day;
-  return "Game";
 }
 
 function safeColor(value, index) {
