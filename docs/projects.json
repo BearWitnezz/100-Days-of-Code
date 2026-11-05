@@ -157,6 +157,20 @@
       "howToPlay": "Type espresso, latte, or cappuccino, then how many of each coin. Type report for what's left, or off to stop.",
       "entry": "../day-15/main.py",
       "accent": "#e0a15a"
+    },
+    {
+      "id": "quiz-game",
+      "title": "Quiz Game",
+      "day": 17,
+      "description": "Answer True or False computer questions and keep a score.",
+      "howToPlay": "Press True or False. The page says if you were right, shows the correct answer, and keeps your score.",
+      "entry": "../day-17/main.py",
+      "files": [
+        { "path": "question_model.py", "src": "../day-17/question_model.py" },
+        { "path": "data.py", "src": "../day-17/data.py" },
+        { "path": "quiz_brain.py", "src": "../day-17/quiz_brain.py" }
+      ],
+      "accent": "#c084fc"
     }
   ]
 }

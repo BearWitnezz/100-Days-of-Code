@@ -649,6 +649,13 @@ body[data-project="number-guessing"] #code {
 
 .composer-row { display: flex; gap: 8px; align-items: center; }
 
+.choice-row {
+  display: flex;
+  gap: 8px;
+}
+
+.choice-row button { flex: 1; }
+
 .caret {
   color: var(--neon-yellow);
   font-weight: 400;
@@ -698,11 +705,17 @@ button:hover, .big-link:hover {
 button:disabled { cursor: wait; opacity: 0.65; }
 button:disabled:hover { transform: none; }
 
-#go, .big-link {
+#go, #choice-true, .big-link {
   background: var(--neon-yellow);
   color: #1a1020;
   border-color: #fff3a8;
   box-shadow: 0 0 14px rgba(255, 225, 74, 0.55);
+}
+
+#choice-false {
+  color: #ffd0ea;
+  border-color: var(--neon-pink);
+  box-shadow: 0 0 12px rgba(255, 43, 214, 0.45);
 }
 
 #go::before {
@@ -716,10 +729,17 @@ button:disabled:hover { transform: none; }
   background: radial-gradient(circle at 35% 30%, #fff8c4, #e0b326 55%, #8a6410);
 }
 
-#go:hover, .big-link:hover {
+#go:hover, #choice-true:hover, .big-link:hover {
   background: #fff;
   color: #1a1020;
   box-shadow: 0 0 18px #fff, 0 0 10px var(--neon-yellow);
+}
+
+#choice-false:hover {
+  background: var(--neon-pink);
+  color: #1a1020;
+  border-color: #ffd0ea;
+  box-shadow: 0 0 18px var(--neon-pink);
 }
 
 button:active, .big-link:active {
@@ -823,6 +843,8 @@ button:focus-visible, .big-link:focus-visible, #answer:focus-visible, .back:focu
 @media (max-width: 560px) {
   .composer-row { flex-wrap: wrap; }
   #go { width: 100%; }
+  .choice-row { flex-wrap: wrap; }
+  .choice-row button { width: 100%; }
   .logo { width: 52px; height: 52px; }
   .brand-row { align-items: flex-start; }
   h1 { font-size: 0.95rem; }

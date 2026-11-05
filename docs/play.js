@@ -20,6 +20,10 @@ const els = {
   termError: document.getElementById("term-error"),
   termDone: document.getElementById("term-done"),
   composer: document.getElementById("composer"),
+  composerRow: document.getElementById("composer-row"),
+  choices: document.getElementById("choices"),
+  choiceTrue: document.getElementById("choice-true"),
+  choiceFalse: document.getElementById("choice-false"),
   answer: document.getElementById("answer"),
   answerLabel: document.getElementById("answer-label"),
   go: document.getElementById("go"),
@@ -38,6 +42,7 @@ const HINTS = {
   loading: "First game takes a moment. Python is downloading.",
   running: "Running…",
   need_input: "Press Enter to send your answer.",
+  true_false: "Press True or False.",
   done: "That's the whole program. Start over to run it again.",
   error: "Read the error, then undo the last answer or start over.",
   fallback: "Copy the code, then open the link and paste it in.",
@@ -61,6 +66,8 @@ if (seedParam && /^\d+$/.test(seedParam)) {
 }
 
 els.composer.addEventListener("submit", onSubmit);
+els.choiceTrue.addEventListener("click", () => onChoice("True"));
+els.choiceFalse.addEventListener("click", () => onChoice("False"));
 els.restart.addEventListener("click", onRestart);
 els.undo.addEventListener("click", onUndo);
 els.toggleCode.addEventListener("click", onToggleCode);
@@ -173,6 +180,8 @@ async function runGame(focusInput) {
   busy = true;
   setStatus("running");
   els.go.disabled = true;
+  els.choiceTrue.disabled = true;
+  els.choiceFalse.disabled = true;
   els.restart.disabled = true;
   try {
     const pyodide = await ensurePyodide();
@@ -203,6 +212,8 @@ async function runGame(focusInput) {
     if (ticket === runId) {
       busy = false;
       els.go.disabled = false;
+      els.choiceTrue.disabled = false;
+      els.choiceFalse.disabled = false;
       els.restart.disabled = false;
       document.body.dataset.run = String(runId);
     }
@@ -212,18 +223,25 @@ async function runGame(focusInput) {
 function paintResult(result, focusInput) {
   setStatus(result.status || "error");
   els.termOut.textContent = result.output || (result.status === "done" ? "(The program finished without printing anything.)" : "");
+  const prompt = tidyPrompt(result.prompt);
+  const trueFalse = usesTrueFalseButtons(result.status);
   els.termPrompt.hidden = result.status !== "need_input";
   els.termDone.hidden = result.status !== "done";
   els.composer.hidden = result.status !== "need_input";
+  els.choices.hidden = !trueFalse;
+  els.composerRow.hidden = trueFalse;
   els.restart.hidden = false;
   els.toggleCode.hidden = false;
   if (result.status === "need_input") {
-    const prompt = tidyPrompt(result.prompt);
     els.termPrompt.textContent = prompt;
     els.answerLabel.textContent = prompt;
     els.answer.setAttribute("aria-label", prompt);
+    els.choices.setAttribute("aria-label", prompt);
     els.answer.value = "";
-    if (focusInput) els.answer.focus();
+    if (focusInput) {
+      if (trueFalse) els.choiceTrue.focus();
+      else els.answer.focus();
+    }
   }
   if (result.error) {
     els.termError.hidden = false;
@@ -233,8 +251,19 @@ function paintResult(result, focusInput) {
     els.termError.textContent = "";
   }
   els.undo.hidden = !(result.status === "error" && answers.length);
-  els.hint.textContent = HINTS[result.status] || HINTS.error;
+  els.hint.textContent = trueFalse ? HINTS.true_false : (HINTS[result.status] || HINTS.error);
   els.termScroll.scrollTop = els.termScroll.scrollHeight;
+}
+
+function usesTrueFalseButtons(status) {
+  return status === "need_input" && project && project.id === "quiz-game";
+}
+
+function onChoice(value) {
+  if (busy || document.body.dataset.status !== "need_input") return;
+  if (!usesTrueFalseButtons("need_input")) return;
+  answers.push(value);
+  runGame(true);
 }
 
 function onSubmit(event) {

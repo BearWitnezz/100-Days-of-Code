@@ -50,8 +50,12 @@
         </div>
       </div>
       <form class="composer" id="composer" hidden>
+        <div class="choice-row" id="choices" hidden role="group" aria-label="True or False">
+          <button type="button" id="choice-true">True</button>
+          <button type="button" id="choice-false">False</button>
+        </div>
         <label class="sr-only" id="answer-label" for="answer">Your answer</label>
-        <div class="composer-row">
+        <div class="composer-row" id="composer-row">
           <span class="caret" aria-hidden="true">&gt;</span>
           <input id="answer" name="answer" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" enterkeyhint="go" placeholder="Type here">
           <button type="submit" id="go">Go</button>
