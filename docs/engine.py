@@ -1,6 +1,7 @@
 # Arcade engine. The play page runs this in the browser.
 # It plays a game until the game calls input(), then hands that
-# question back to the page. screen.textinput() waits the same way.
+# question back to the page. screen.textinput() asks after any turtles
+# already on the screen have been drawn.
 # Turtle drawings are sent back for the page to paint.
 # You do not run this file yourself.
 
@@ -140,6 +141,13 @@ def _install_turtle():
             message = "" if prompt is None else str(prompt)
             if message == "" and title:
                 message = str(title)
+            # No answer yet. A blank bet is falsy, so the race stays off
+            # while the turtles take their marks. The page asks after that.
+            if index >= len(answers) and not turtle_state.get("deferred_textinput"):
+                turtle_state["deferred_textinput"] = True
+                turtle_state["awaiting_bet"] = True
+                turtle_state["textinput_prompt"] = message
+                return ""
             return arcade_input(message)
 
         def exitonclick(self):
@@ -290,9 +298,18 @@ extra_err = captured_err.getvalue().strip()
 if extra_err and not error_out:
     error_out = extra_err
 
+output_text = captured_out.getvalue()
+if turtle_state.get("awaiting_bet") and status == "done":
+    status = "need_input"
+    prompt_out = turtle_state.get("textinput_prompt") or prompt_out
+    if output_text.strip() == "":
+        output_text = ""
+    if turtle_state["frames"]:
+        turtle_state["frames"] = [turtle_state["frames"][-1]]
+
 result_payload = {
     "status": status,
-    "output": captured_out.getvalue(),
+    "output": output_text,
     "prompt": prompt_out,
     "error": error_out,
 }
