@@ -19,6 +19,8 @@ const els = {
   termPrompt: document.getElementById("term-prompt"),
   termError: document.getElementById("term-error"),
   termDone: document.getElementById("term-done"),
+  turtleStage: document.getElementById("turtle-stage"),
+  turtleCanvas: document.getElementById("turtle-canvas"),
   composer: document.getElementById("composer"),
   composerRow: document.getElementById("composer-row"),
   choices: document.getElementById("choices"),
@@ -57,6 +59,13 @@ let seed = Math.floor(Math.random() * 1000000000) + 1;
 let seedLocked = false;
 let runId = 0;
 let busy = false;
+let turtlePlayback = 0;
+
+const TURTLE_SHAPE = [
+  [0, 16], [-2, 14], [-1, 10], [-4, 7], [-7, 9], [-9, 8], [-6, 5], [-7, 1],
+  [-5, -3], [-8, -6], [-6, -8], [-4, -5], [0, -7], [4, -5], [6, -8], [8, -6],
+  [5, -3], [7, 1], [6, 5], [9, 8], [7, 9], [4, 7], [1, 10], [2, 14],
+];
 
 const params = new URLSearchParams(location.search);
 const seedParam = params.get("seed");
@@ -177,6 +186,7 @@ function showFallback() {
 
 async function runGame(focusInput) {
   const ticket = ++runId;
+  turtlePlayback += 1;
   busy = true;
   setStatus("running");
   els.go.disabled = true;
@@ -222,11 +232,14 @@ async function runGame(focusInput) {
 
 function paintResult(result, focusInput) {
   setStatus(result.status || "error");
-  els.termOut.textContent = result.output || (result.status === "done" ? "(The program finished without printing anything.)" : "");
+  const holdResult = shouldHoldTurtleResult(result);
+  paintTurtle(result.turtle, holdResult ? function () { revealTurtleResult(result); } : null);
+  const earlyOutput = holdResult ? (result.turtle.outputBeforeMotion || "") : (result.output || "");
+  els.termOut.textContent = earlyOutput || (result.status === "done" && !holdResult ? "(The program finished without printing anything.)" : "");
   const prompt = tidyPrompt(result.prompt);
   const trueFalse = usesTrueFalseButtons(result.status);
   els.termPrompt.hidden = result.status !== "need_input";
-  els.termDone.hidden = result.status !== "done";
+  els.termDone.hidden = result.status !== "done" || holdResult;
   els.composer.hidden = result.status !== "need_input";
   els.choices.hidden = !trueFalse;
   els.composerRow.hidden = trueFalse;
@@ -251,8 +264,118 @@ function paintResult(result, focusInput) {
     els.termError.textContent = "";
   }
   els.undo.hidden = !(result.status === "error" && answers.length);
-  els.hint.textContent = trueFalse ? HINTS.true_false : (HINTS[result.status] || HINTS.error);
+  if (holdResult) els.hint.textContent = HINTS.running;
+  else els.hint.textContent = trueFalse ? HINTS.true_false : (HINTS[result.status] || HINTS.error);
   els.termScroll.scrollTop = els.termScroll.scrollHeight;
+}
+
+function shouldHoldTurtleResult(result) {
+  const frames = result.turtle && result.turtle.frames;
+  if (!frames || frames.length < 2) return false;
+  if (result.status !== "done") return false;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  return true;
+}
+
+function revealTurtleResult(result) {
+  els.termOut.textContent = result.output || "(The program finished without printing anything.)";
+  els.termDone.hidden = result.status !== "done";
+  els.hint.textContent = HINTS[result.status] || HINTS.error;
+  els.termScroll.scrollTop = els.termScroll.scrollHeight;
+}
+
+function paintTurtle(scene, onDone) {
+  const token = ++turtlePlayback;
+  if (!scene || typeof scene.width !== "number" || typeof scene.height !== "number") {
+    els.turtleStage.hidden = true;
+    return;
+  }
+  const canvas = els.turtleCanvas;
+  canvas.width = scene.width;
+  canvas.height = scene.height;
+  canvas.setAttribute("aria-label", "Turtle screen, " + scene.width + " by " + scene.height);
+  els.turtleStage.hidden = false;
+  const frames = Array.isArray(scene.frames) ? scene.frames : [];
+  if (!frames.length) {
+    drawTurtleFrame(canvas, scene, null);
+    return;
+  }
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || frames.length === 1) {
+    drawTurtleFrame(canvas, scene, frames[frames.length - 1]);
+    if (onDone) onDone();
+    return;
+  }
+  drawTurtleFrame(canvas, scene, frames[0]);
+  const duration = Math.min(4200, Math.max(1400, frames.length * 7));
+  const start = performance.now();
+  let lastIndex = 0;
+  function tick(now) {
+    if (token !== turtlePlayback) return;
+    const progress = Math.min(1, (now - start) / duration);
+    const index = Math.min(frames.length - 1, Math.floor(progress * frames.length));
+    if (index !== lastIndex) {
+      drawTurtleFrame(canvas, scene, frames[index]);
+      lastIndex = index;
+    }
+    if (progress < 1) requestAnimationFrame(tick);
+    else if (onDone) onDone();
+  }
+  requestAnimationFrame(tick);
+}
+
+function drawTurtleFrame(canvas, scene, frame) {
+  const ctx = canvas.getContext("2d");
+  const width = scene.width;
+  const height = scene.height;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = scene.bg || "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  const lines = Array.isArray(scene.lines) ? scene.lines : [];
+  const count = frame && typeof frame.lineCount === "number" ? frame.lineCount : 0;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  for (let i = 0; i < count && i < lines.length; i += 1) {
+    const line = lines[i];
+    ctx.beginPath();
+    ctx.strokeStyle = line.color || "#000000";
+    ctx.lineWidth = line.width || 1;
+    ctx.moveTo(width / 2 + line.x1, height / 2 - line.y1);
+    ctx.lineTo(width / 2 + line.x2, height / 2 - line.y2);
+    ctx.stroke();
+  }
+  const turtles = frame && Array.isArray(frame.turtles) ? frame.turtles : [];
+  turtles.forEach((turtle) => {
+    if (!turtle || turtle.visible === false) return;
+    drawOneTurtle(ctx, width, height, turtle);
+  });
+}
+
+function drawOneTurtle(ctx, width, height, turtle) {
+  const heading = Number(turtle.heading) || 0;
+  const radians = heading * Math.PI / 180;
+  const e0 = Math.cos(radians);
+  const e1 = Math.sin(radians);
+  const originX = Number(turtle.x) || 0;
+  const originY = Number(turtle.y) || 0;
+  ctx.beginPath();
+  TURTLE_SHAPE.forEach((point, index) => {
+    const x = point[0];
+    const y = point[1];
+    const worldX = originX + (e1 * x + e0 * y);
+    const worldY = originY + (-e0 * x + e1 * y);
+    const screenX = width / 2 + worldX;
+    const screenY = height / 2 - worldY;
+    if (index === 0) ctx.moveTo(screenX, screenY);
+    else ctx.lineTo(screenX, screenY);
+  });
+  ctx.closePath();
+  ctx.fillStyle = turtle.fill || turtle.color || "#000000";
+  ctx.strokeStyle = "#1a1020";
+  ctx.lineWidth = 1.5;
+  ctx.fill();
+  ctx.stroke();
 }
 
 function usesTrueFalseButtons(status) {
