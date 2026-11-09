@@ -171,6 +171,15 @@
         { "path": "quiz_brain.py", "src": "../day-17/quiz_brain.py" }
       ],
       "accent": "#c084fc"
+    },
+    {
+      "id": "turtle-race",
+      "title": "Turtle Race",
+      "day": 19,
+      "description": "Bet which color turtle will finish first.",
+      "howToPlay": "Type a color: red, orange, yellow, green, blue, or violet.",
+      "entry": "../day-19/main.py",
+      "accent": "#f0abfc"
     }
   ]
 }
