@@ -233,14 +233,16 @@ async function runGame(focusInput) {
 function paintResult(result, focusInput) {
   setStatus(result.status || "error");
   const holdResult = shouldHoldTurtleResult(result);
-  paintTurtle(result.turtle, holdResult ? function () { revealTurtleResult(result); } : null);
+  const lineupFirst = isStartingLineup(result);
+  paintTurtle(result.turtle, holdResult ? function () { revealTurtleResult(result); } : null, lineupFirst);
   const earlyOutput = holdResult ? (result.turtle.outputBeforeMotion || "") : (result.output || "");
   els.termOut.textContent = earlyOutput || (result.status === "done" && !holdResult ? "(The program finished without printing anything.)" : "");
   const prompt = tidyPrompt(result.prompt);
   const trueFalse = usesTrueFalseButtons(result.status);
-  els.termPrompt.hidden = result.status !== "need_input";
+  const showPromptNow = result.status === "need_input" && !lineupFirst;
+  els.termPrompt.hidden = !showPromptNow;
   els.termDone.hidden = result.status !== "done" || holdResult;
-  els.composer.hidden = result.status !== "need_input";
+  els.composer.hidden = !showPromptNow;
   els.choices.hidden = !trueFalse;
   els.composerRow.hidden = trueFalse;
   els.restart.hidden = false;
@@ -251,7 +253,18 @@ function paintResult(result, focusInput) {
     els.answer.setAttribute("aria-label", prompt);
     els.choices.setAttribute("aria-label", prompt);
     els.answer.value = "";
-    if (focusInput) {
+    if (lineupFirst) {
+      const token = turtlePlayback;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (token !== turtlePlayback) return;
+          if (document.body.dataset.status !== "need_input") return;
+          els.termPrompt.hidden = false;
+          els.composer.hidden = false;
+          if (focusInput) els.answer.focus();
+        });
+      });
+    } else if (focusInput) {
       if (trueFalse) els.choiceTrue.focus();
       else els.answer.focus();
     }
@@ -269,6 +282,11 @@ function paintResult(result, focusInput) {
   els.termScroll.scrollTop = els.termScroll.scrollHeight;
 }
 
+function isStartingLineup(result) {
+  const frames = result.turtle && result.turtle.frames;
+  return result.status === "need_input" && Array.isArray(frames) && frames.length > 0;
+}
+
 function shouldHoldTurtleResult(result) {
   const frames = result.turtle && result.turtle.frames;
   if (!frames || frames.length < 2) return false;
@@ -284,7 +302,7 @@ function revealTurtleResult(result) {
   els.termScroll.scrollTop = els.termScroll.scrollHeight;
 }
 
-function paintTurtle(scene, onDone) {
+function paintTurtle(scene, onDone, settle) {
   const token = ++turtlePlayback;
   if (!scene || typeof scene.width !== "number" || typeof scene.height !== "number") {
     els.turtleStage.hidden = true;
@@ -301,19 +319,25 @@ function paintTurtle(scene, onDone) {
     return;
   }
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce || frames.length === 1) {
+  if (settle || reduce || frames.length === 1) {
     drawTurtleFrame(canvas, scene, frames[frames.length - 1]);
+    if (onDone && !settle) onDone();
+    return;
+  }
+  const startIndex = firstFullField(frames);
+  drawTurtleFrame(canvas, scene, frames[startIndex]);
+  if (startIndex >= frames.length - 1) {
     if (onDone) onDone();
     return;
   }
-  drawTurtleFrame(canvas, scene, frames[0]);
-  const duration = Math.min(4200, Math.max(1400, frames.length * 7));
+  const span = frames.length - startIndex;
+  const duration = Math.min(4200, Math.max(1400, span * 7));
   const start = performance.now();
-  let lastIndex = 0;
+  let lastIndex = startIndex;
   function tick(now) {
     if (token !== turtlePlayback) return;
     const progress = Math.min(1, (now - start) / duration);
-    const index = Math.min(frames.length - 1, Math.floor(progress * frames.length));
+    const index = Math.min(frames.length - 1, startIndex + Math.floor(progress * span));
     if (index !== lastIndex) {
       drawTurtleFrame(canvas, scene, frames[index]);
       lastIndex = index;
@@ -322,6 +346,17 @@ function paintTurtle(scene, onDone) {
     else if (onDone) onDone();
   }
   requestAnimationFrame(tick);
+}
+
+function firstFullField(frames) {
+  const last = frames[frames.length - 1];
+  const full = last && Array.isArray(last.turtles) ? last.turtles.length : 0;
+  if (!full) return 0;
+  for (let i = 0; i < frames.length; i += 1) {
+    const turtles = frames[i] && frames[i].turtles;
+    if (turtles && turtles.length === full) return i;
+  }
+  return 0;
 }
 
 function drawTurtleFrame(canvas, scene, frame) {
