@@ -1,4 +1,5 @@
 class MoneyMachine:
+    """Models the machine that takes payment and tracks profit."""
 
     CURRENCY = "$"
 
@@ -10,6 +11,7 @@ class MoneyMachine:
     }
 
     def __init__(self):
+        """Start with no profit and no coins received."""
         self.profit = 0
         self.money_received = 0
 

@@ -1,11 +1,19 @@
+# TODO 1: Show the logo and pick two different accounts to compare.
+# TODO 2: Print each account as its name, description, and country, with the vs art between them.
+# TODO 3: Ask who has more followers, A or B, and check that guess.
+# TODO 4: On a correct guess, add a point, move B into A's place, and draw a new B.
+# TODO 5: On a wrong guess, end the game and print the final score.
+
 print("Welcome to Higher or Lower!")
 import random
 from art import logo
 from art import vs
 from game_data import data
 def format_account(account):
+    """Return an account as its name, description, and country."""
     return f"{account["name"]}, {account["description"]}, {account["country"]}"
 def check_answer(guess, a_followers, b_followers):
+    """Return True when the guess names the account with more followers."""
     if a_followers > b_followers:
         return guess == "a"
     else:

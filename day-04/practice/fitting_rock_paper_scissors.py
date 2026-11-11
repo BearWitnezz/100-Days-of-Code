@@ -1,3 +1,7 @@
+# TODO 1: Have the computer pick wrench, pipe, or plunger at random.
+# TODO 2: Ask the player for one of those three, and reject anything else.
+# TODO 3: Print a tie, a win, or a loss using the fitting rules.
+
 # Wrench beats pipe, pipe beats plunger, and plunger beats wrench.
 import random
 fittings = ["wrench","pipe","plunger"]

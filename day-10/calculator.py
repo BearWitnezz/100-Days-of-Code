@@ -1,11 +1,19 @@
+# TODO 1: Define add, subtract, multiply, and divide, and look them up by +, -, *, and /.
+# TODO 2: Ask for two numbers and an operation, then print the result.
+# TODO 3: Offer to keep calculating with that result, or to start a new calculation.
+
 from art import logo
 def add(n1, n2):
+    """Return the sum of the two numbers."""
     return n1 + n2
 def subtract(n1, n2):
+    """Return the first number minus the second."""
     return n1 - n2
 def multiply(n1, n2):
+    """Return the product of the two numbers."""
     return n1 * n2
 def divide(n1, n2):
+    """Return the first number divided by the second."""
     return n1 / n2
 math = {"+": add, "-": subtract, "*": multiply, "/": divide}
 reset = False

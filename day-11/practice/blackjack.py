@@ -1,6 +1,14 @@
+# TODO 1: Ask whether to play, then deal two cards each from a deck of card values.
+# TODO 2: Show the player's cards and score, but only the computer's first card.
+# TODO 3: End the hand right away if either side is dealt blackjack.
+# TODO 4: Let the player take another card or pass. Count an ace as 1 when a hand goes over 21.
+# TODO 5: On a pass, have the computer draw until it reaches 17, then say who won.
+# TODO 6: Offer another game when the hand is over.
+
 import random
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 def begin():
+    """Ask whether to play a hand, then start one or stop."""
     lets_play = False
     while not lets_play:
         play = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ").lower()
@@ -12,6 +20,7 @@ def begin():
         else:
             print("Invalid input!")
 def computers_turn(computers_cards, computers_current_score):
+    """Draw for the computer until its score reaches 17."""
     while computers_current_score < 17:
         computers_cards.append(random.choice(cards))
         computers_current_score = sum(computers_cards)
@@ -20,6 +29,7 @@ def computers_turn(computers_cards, computers_current_score):
             computers_current_score = sum(computers_cards)
     return computers_cards, computers_current_score
 def blackjack():
+    """Play one blackjack hand, then ask to play again."""
     game_over = False
     from art import logo
     print(logo)

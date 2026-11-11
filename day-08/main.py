@@ -1,9 +1,14 @@
+# TODO 1: Define caesar() to encode or decode a message by shifting its letters.
+# TODO 2: Leave spaces and symbols unchanged, and wrap around the end of the alphabet.
+# TODO 3: Ask for the direction, the message, and the shift, then offer to run it again.
+
 from art import logo
 print(logo)
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 def caesar(original_text, shift_amount, encode_or_decode):
+    """Encode or decode a message by shifting its letters."""
     output_text = ""
     if encode_or_decode == "decode":
         shift_amount *= -1

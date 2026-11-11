@@ -1,3 +1,8 @@
+# TODO 1: Ask which turtle color the user wants to bet on.
+# TODO 2: Line up one turtle of each color at the starting line.
+# TODO 3: Move every turtle forward by a small random amount until one finishes.
+# TODO 4: Print whether the bet won, and close the window on a click.
+
 from turtle import Turtle, Screen
 import random
 is_race_on = False

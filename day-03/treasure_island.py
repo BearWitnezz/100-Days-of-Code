@@ -1,3 +1,8 @@
+# TODO 1: Welcome the player and tell them the mission is to find the treasure.
+# TODO 2: Ask left or right. Only the left path continues.
+# TODO 3: Ask swim or wait. Only waiting continues.
+# TODO 4: Ask which door. One door wins, and any other choice ends the game.
+
 print("Welcome to Treasure Island.")
 print("Your mission is to find the treasure.")
 choice_1 = input("Left or Right? ").lower()

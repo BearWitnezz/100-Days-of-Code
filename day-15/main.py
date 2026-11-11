@@ -1,3 +1,8 @@
+# TODO 1: Store the drink menu and how much water, milk, and coffee the machine starts with.
+# TODO 2: Write process_coins() to take quarters, dimes, nickles, and pennies and return the total.
+# TODO 3: Write is_resource_sufficient() to catch an ingredient the machine does not have enough of.
+# TODO 4: Until the user types off, print a report or make the drink when resources and payment cover it, and give change.
+
 MENU = {
     "espresso": {"ingredients": {"water": 50, "coffee": 18}, "cost": 1.5},
     "latte": {"ingredients": {"water": 200, "milk": 150, "coffee": 24}, "cost": 2.5},
@@ -12,6 +17,7 @@ resources = {
 
 
 def process_coins():
+    """Ask for coins and return the total in dollars."""
     print("Please insert coins.")
     quarters = 0.25 * int(input("How many quarters?: "))
     dimes = 0.10 * int(input("How many dimes?: "))
@@ -22,6 +28,7 @@ def process_coins():
 
 
 def is_resource_sufficient(order_ingredients):
+    """Return True when every ingredient in the order is still in stock."""
     enough_resources = True
     for items in order_ingredients:
         if resources[items] < order_ingredients[items]:

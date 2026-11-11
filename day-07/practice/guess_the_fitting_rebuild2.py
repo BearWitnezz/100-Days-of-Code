@@ -1,3 +1,8 @@
+# TODO 1: Pick a fitting at random and start the board as blanks.
+# TODO 2: Take guesses until the player wins or runs out of lives.
+# TODO 3: Do not charge a life for a letter that was already tried.
+# TODO 4: Reveal the word on a loss, and tell the player when they win.
+
 import random
 plumbing_words = ["valve", "anglestop", "elbow", "wastearm"]
 word = []

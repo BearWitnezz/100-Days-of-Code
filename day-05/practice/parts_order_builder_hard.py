@@ -1,3 +1,7 @@
+# TODO 1: Welcome the user and ask how many letters, numbers, and symbols to use.
+# TODO 2: Collect random picks in a list, then shuffle that list.
+# TODO 3: Join the shuffled picks into one order code and print it.
+
 import random
 letters = ["P","V","C","T","E"]
 numbers = ["0","1","2","3","4","5","6","7","8","9"]

@@ -1,3 +1,7 @@
+# TODO 1: Ask how many letters, symbols, and numbers the password should include.
+# TODO 2: Easy version: pick that many of each, in that order, and print the password.
+# TODO 3: Hard version: pick the same characters, shuffle them, and print the result.
+
 import random
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']

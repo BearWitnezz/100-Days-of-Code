@@ -1,3 +1,7 @@
+# TODO 1: Save each bidder's name and bid in a dictionary.
+# TODO 2: Ask if anyone else is bidding, and clear the screen between bidders.
+# TODO 3: After the last bid, find the highest one and print the winner and the amount.
+
 from art import logo
 print(logo)
 game_not_over = True

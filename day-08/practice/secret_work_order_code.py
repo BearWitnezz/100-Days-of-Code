@@ -1,7 +1,12 @@
+# TODO 1: Define caesar() to encode or decode a work order.
+# TODO 2: Shift only letters, wrap around the alphabet, and reject a direction that is neither.
+# TODO 3: Keep asking for another message until the user says no.
+
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 message_done = False
 def caesar(message, shift_amount, encode_or_decode):
+    """Encode or decode a work order and print the result."""
     encoded_message = ""
     if encode_or_decode != "encode" and encode_or_decode != "decode":
         print("Invalid input!")

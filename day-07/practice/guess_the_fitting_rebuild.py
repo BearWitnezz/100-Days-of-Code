@@ -1,3 +1,8 @@
+# TODO 1: Pick a fitting, show blanks, and start with six lives.
+# TODO 2: Remember letters already guessed so a repeat does not cost a life.
+# TODO 3: Reveal the letter in every position where it belongs.
+# TODO 4: End on a win, or on a loss that shows the word.
+
 import random
 plumbing_words = ["valve", "anglestop", "elbow", "wastearm"]
 word = []

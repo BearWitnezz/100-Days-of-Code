@@ -1,3 +1,7 @@
+# TODO 1: Keep the RGB colors extracted from a Hirst painting.
+# TODO 2: Define hirst() to paint rows of random colored dots, ten dots across.
+# TODO 3: Paint ten rows and close the window when it is clicked.
+
 # import colorgram
 # colors = colorgram.extract('hirst.jpg', 24)
 # list_of_colors = []

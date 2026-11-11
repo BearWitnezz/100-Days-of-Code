@@ -1,4 +1,5 @@
 class QuizBrain:
+    """Asks each quiz question and keeps the score."""
     def __init__(self, question_list):
         """Set up the quiz with a list of questions, starting at question 0."""
         self.question_number = 0
