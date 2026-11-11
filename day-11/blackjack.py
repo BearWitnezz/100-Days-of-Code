@@ -1,9 +1,47 @@
-# TODO 1: Ask whether to play, then deal two cards each from a deck of card values.
-# TODO 2: Show the player's cards and score, but only the computer's first card.
-# TODO 3: End the hand right away if either side is dealt blackjack.
-# TODO 4: Let the player take another card or pass. Count an ace as 1 when a hand goes over 21.
-# TODO 5: On a pass, have the computer draw until it reaches 17, then say who won.
-# TODO 6: Offer another game when the hand is over.
+# TODO 1: Import random. The deck is 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10. An ace starts as 11. The extra
+#   10s are the face cards.
+
+# TODO 2: Define begin() with a docstring. Loop until the answer is y or n. Ask "Do you want to play a game of
+#   Blackjack? Type 'y' or 'n': ". y starts a hand. n stops. Anything else prints "Invalid input!".
+
+# TODO 3: Define computers_turn(computers_cards, computers_current_score) with a docstring. While the computer's
+#   score is under 17, draw one card from the deck and add the hand up again.
+
+# TODO 4: In that same turn, while the computer is over 21 and still holds an 11, change the first 11 to 1 and
+#   add the hand up again. Return the computer's cards and its score.
+
+# TODO 5: Define blackjack() with a docstring. Start the hand as not over. Import the logo from art and print it.
+
+# TODO 6: Deal two random cards to the player and two to the computer. Score each hand with sum. Remember the
+#   computer's first card.
+
+# TODO 7: Print the player's cards and current score. Print only the computer's first card.
+
+# TODO 8: If the player has 21, the hand ends immediately. Print both final hands and scores, then
+#   "Win with a Blackjack 😎".
+
+# TODO 9: If the computer has 21 instead, print both final hands and scores, then
+#   "Lose, opponent has Blackjack 😱".
+
+# TODO 10: Loop while the hand is not over. When the player's score is not 21, ask "Type 'y' to get another card,
+#   type 'n' to pass: ".
+
+# TODO 11: On y, draw one card and rescore. While the score is over 21 and the hand still has an 11, change the
+#   first 11 to 1 and rescore.
+#   Nudge: do that before you decide the player busted, or an ace that could be 1 counts as a loss.
+
+# TODO 12: Still over 21 ends the hand: print both final hands and scores, then "You lose 😤". Otherwise show the
+#   player's cards and score again, and the computer's first card.
+
+# TODO 13: On n, run the computer's turn, end the hand, and print both final hands and scores. Computer over 21
+#   prints "Opponent went over. You win 😁". Equal scores print "Draw 🙃". A lower computer score prints
+#   "You win 😃". Anything else prints "You lose 😤".
+
+# TODO 14: If the player's score is 21 inside that loop, end the hand, let the computer take its turn, and print
+#   both final hands. Equal scores are "Draw 🙃". Otherwise print "You win 😃".
+
+# TODO 15: When the hand function finishes, call begin() so the player can play again. Call begin() once at the
+#   bottom of the file to start the first game.
 
 import random
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]

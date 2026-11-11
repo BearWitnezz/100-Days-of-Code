@@ -1,6 +1,28 @@
-# TODO 1: Welcome the player and pick a secret number from 1 to 100.
-# TODO 2: Give 10 attempts on easy and 5 attempts on hard.
-# TODO 3: After each guess, say too high, too low, or correct, and stop when the attempts run out.
+# TODO 1: Import random and the logo from art.
+
+# TODO 2: Define make_a_guess(attempts) with a docstring. Print how many attempts are left, then loop until the
+#   game is over.
+
+# TODO 3: Ask "Make a guess: ". If the answer is all digits, turn it into an int.
+
+# TODO 4: A guess equal to the secret number ends the game and prints "You got it! The answer was {number}."
+
+# TODO 5: A guess below the secret prints "Too low." and costs one attempt. A guess above it prints "Too high."
+#   and costs one attempt. While attempts remain, print "Guess again." and how many attempts are left.
+
+# TODO 6: A guess that is not a whole number also costs one attempt. While attempts remain, print "Guess again."
+#   and the attempts that are left.
+
+# TODO 7: At 0 attempts, end the game and print "You've run out of guesses. The number was {number}. Refresh the
+#   page to run again."
+
+# TODO 8: Print the logo. Then print "Welcome to the Number Guessing Game!" and "I'm thinking of a number between
+#   1 and 100."
+
+# TODO 9: Pick the secret number with random.randint from 1 to 100.
+
+# TODO 10: Ask "Choose a difficulty. Type 'easy' or 'hard': " and lowercase the answer. "easy" calls make_a_guess
+#   with 10 attempts. Any other answer calls it with 5.
 
 import random
 from art import logo

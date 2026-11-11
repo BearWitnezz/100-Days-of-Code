@@ -1,6 +1,15 @@
-# TODO 1: Ask whether water is spraying and whether it is near electrical equipment.
-# TODO 2: If either answer is yes, call it an emergency and ask about the house shutoff.
-# TODO 3: Say you are on the way, tell them to call the city, or say it is not an emergency.
+# TODO 1: Print "Welcome to the Leak Triage Bot".
+
+# TODO 2: Ask "Is water spraying?" and "Is it near an electrical unit?". Save both answers in lowercase.
+
+# TODO 3: If either answer is "yes", print "Ok this is an emergency!" and ask "Is there a working house shutoff?".
+#   Save that answer in lowercase too.
+
+# TODO 4: When the shutoff answer is "yes", print "Ok on my way!".
+
+# TODO 5: When the shutoff answer is anything else, print "Contact the city first to have your water shutoff."
+
+# TODO 6: If water is not spraying and it is not near electrical equipment, print "This is not an emergency."
 
 print("Welcome to the Leak Triage Bot")
 water_spraying = input("Is water spraying?\n").lower()

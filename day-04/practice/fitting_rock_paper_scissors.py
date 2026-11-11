@@ -1,6 +1,22 @@
-# TODO 1: Have the computer pick wrench, pipe, or plunger at random.
-# TODO 2: Ask the player for one of those three, and reject anything else.
-# TODO 3: Print a tie, a win, or a loss using the fitting rules.
+# TODO 1: Import random. The three fittings are wrench, pipe, and plunger.
+#   Wrench beats pipe, pipe beats plunger, and plunger beats wrench.
+
+# TODO 2: Let the computer pick one fitting at random.
+
+# TODO 3: Print "Welcome to the fittings version of Rock Paper Scissors".
+
+# TODO 4: Ask "Choose: wrench, pipe, or plunger." and save the answer in lowercase.
+
+# TODO 5: If that answer is not one of the three fittings, print "Not a valid choice!" and skip the match.
+
+# TODO 6: Otherwise print "Computer chose: " and the computer's fitting.
+
+# TODO 7: The same choice on both sides prints "Tie!".
+
+# TODO 8: The player wins when the computer has wrench and the player has plunger, the computer has pipe and the
+#   player has wrench, or the computer has plunger and the player has pipe. Print "You win!".
+
+# TODO 9: Every other matchup prints "You lose!".
 
 # Wrench beats pipe, pipe beats plunger, and plunger beats wrench.
 import random

@@ -1,6 +1,20 @@
-# TODO 1: Hide a clog a random 1 to 10 feet down the drain.
-# TODO 2: Define push and twist.
-# TODO 3: Keep asking push or twist until the clog is cleared. Twist works only at the clog.
+# TODO 1: Import random. Hide the clog a random 1 to 10 feet down the drain. Start the snake at 0 feet, and start
+#   clog_cleared as False.
+
+# TODO 2: Define push() with a docstring. It prints the snake's current position.
+
+# TODO 3: Define twist() with a docstring. It prints "Drain cleared!".
+
+# TODO 4: Print "Welcome to the Drain Snake Simulator".
+
+# TODO 5: Loop while the clog is not cleared. Ask "Push or Twist?" and lowercase the answer.
+
+# TODO 6: "push" moves the snake forward 1 foot, then calls push().
+
+# TODO 7: "twist" clears the clog only when the snake's position equals the clog distance: call twist() and set
+#   clog_cleared to True. Any other twist prints "Nothing here, keep pushing."
+
+# TODO 8: Any other answer prints "invalid input!".
 
 import random
 clog_distance = random.randint(1,10)
