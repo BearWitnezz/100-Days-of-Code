@@ -1,7 +1,21 @@
-# TODO 1: Pick a plumbing fitting and show a blank for each letter.
-# TODO 2: Ask for letters until the word is complete or the lives hit zero.
-# TODO 3: Fill the letter in wherever it appears, and lose a life on a miss.
-# TODO 4: Print whether the player won or lost.
+# TODO 1: Import random. The fittings are elbow, coupling, flange, and valve.
+
+# TODO 2: Pick one fitting at random. Start with 6 lives, and start game_over as False.
+
+# TODO 3: Build a display list with one "_" for each letter, and print it.
+
+# TODO 4: Loop while the game is not over. Ask "Enter your guess: " and lowercase it.
+
+# TODO 5: Walk the fitting by position. Wherever the guess matches that letter, put the letter into the display.
+
+# TODO 6: If the guess is not in the fitting at all, lose one life and print "Wrong guess. Lives: " plus the lives
+#   that are left.
+
+# TODO 7: Print the display after every guess.
+
+# TODO 8: At 0 lives, print "Game Over. You lost!" and set game_over to True.
+
+# TODO 9: If the display has no "_" left, print "You win!" and set game_over to True.
 
 import random
 plumbing_words = ["elbow","coupling","flange","valve"]

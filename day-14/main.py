@@ -1,8 +1,28 @@
-# TODO 1: Show the logo and pick two different accounts to compare.
-# TODO 2: Print each account as its name, description, and country, with the vs art between them.
-# TODO 3: Ask who has more followers, A or B, and check that guess.
-# TODO 4: On a correct guess, add a point, move B into A's place, and draw a new B.
-# TODO 5: On a wrong guess, end the game and print the final score.
+# TODO 1: Print "Welcome to Higher or Lower!". Import random, the logo, the vs art, and the account data.
+
+# TODO 2: Define format_account(account) with a docstring. It returns the account's name, description, and
+#   country in one string, separated by commas.
+
+# TODO 3: Define check_answer(guess, a_followers, b_followers) with a docstring. Return True when the guess is
+#   "a" and A has more followers, or when the guess is "b" and B has at least as many.
+
+# TODO 4: Start the game as not over. Print the logo. Start the score at 0.
+
+# TODO 5: Pick two accounts at random for A and B. If they are the same account, pick B again until they differ.
+
+# TODO 6: Print "Compare A: " plus the formatted A account, then the vs art, then "Against B: " plus the
+#   formatted B account.
+
+# TODO 7: Loop while the game is not over. Ask "Who has more followers? Type 'A' or 'B': " and lowercase the
+#   answer. Check it against the two follower_count values.
+
+# TODO 8: A correct guess adds 1 to the score, prints 20 blank lines, prints the logo again, and prints
+#   "You're right! Current score: " plus the score.
+
+# TODO 9: On that correct guess, move B into A's place. Print Compare A and the vs art, draw a new B that is not
+#   the same account as A, format it, and print Against B.
+
+# TODO 10: A wrong guess ends the game and prints "Sorry, that's wrong. Final score: " plus the score.
 
 print("Welcome to Higher or Lower!")
 import random

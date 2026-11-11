@@ -1,6 +1,18 @@
-# TODO 1: Turn each item in the question data into a Question and store them in a list.
-# TODO 2: Hand that list to a QuizBrain and keep asking while questions remain.
-# TODO 3: When the quiz ends, print the score out of the number of questions asked.
+# TODO 1: Import Question from question_model, question_data from data, and QuizBrain from quiz_brain.
+
+# TODO 2: Start an empty question bank.
+
+# TODO 3: Loop through question_data. From each dictionary, take the "question" text and the "correct_answer".
+
+# TODO 4: Build a Question from that text and answer, and append it to the bank.
+
+# TODO 5: Create a QuizBrain and hand it the question bank.
+
+# TODO 6: While the quiz still has questions, call next_question().
+
+# TODO 7: When the loop ends, print "You've completed the Quiz!".
+
+# TODO 8: Print "Your final score: {score}/{question_number}" from the quiz brain.
 
 from question_model import Question
 from data import question_data

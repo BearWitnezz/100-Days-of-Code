@@ -1,6 +1,19 @@
-# TODO 1: Save each contractor's name and bid until someone says there are no more.
-# TODO 2: Find the winner by comparing bids, not by adding them together.
-# TODO 3: Print who gets the job and the winning bid.
+# TODO 1: Print "Welcome to the Contractor Bid Board!".
+
+# TODO 2: Start an empty dictionary for the bids, and start bidding_done as False.
+
+# TODO 3: Loop while bidding is not done. Ask for the contractor's name and a whole-number bid.
+
+# TODO 4: Save that bid in the dictionary under the contractor's name.
+
+# TODO 5: Ask "Any other contractors? yes or no.". "no" marks bidding as done.
+
+# TODO 6: Once bidding is done, start the highest amount at 0 and the winner's name as an empty string.
+
+# TODO 7: Loop through the dictionary. Keep the name whose bid is higher than the highest so far.
+#   Nudge: compare the bids. Don't add them together.
+
+# TODO 8: Print "The job goes to {name} with a bid of ${amount}."
 
 print("Welcome to the Contractor Bid Board!")
 bid = {}

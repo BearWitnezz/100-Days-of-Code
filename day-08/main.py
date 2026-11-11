@@ -1,6 +1,26 @@
-# TODO 1: Define caesar() to encode or decode a message by shifting its letters.
-# TODO 2: Leave spaces and symbols unchanged, and wrap around the end of the alphabet.
-# TODO 3: Ask for the direction, the message, and the shift, then offer to run it again.
+# TODO 1: Import the logo from art and print it.
+
+# TODO 2: Store the lowercase alphabet in a list, a through z.
+
+# TODO 3: Define caesar(original_text, shift_amount, encode_or_decode) with a docstring. It encodes or decodes
+#   by shifting letters, then prints the result.
+
+# TODO 4: When the direction is "decode", multiply the shift by -1 once, before the letter loop.
+#   Nudge: flipping the sign inside the loop reverses every other letter.
+
+# TODO 5: Walk the message. A character that is not in the alphabet (a space, number, or symbol) is copied
+#   unchanged.
+
+# TODO 6: A letter's new index is its alphabet index plus the shift. Wrap with modulo the length of the alphabet,
+#   then take the letter at that index.
+
+# TODO 7: Print "Here is the {direction}d result: " and the finished text.
+
+# TODO 8: Loop while the user wants another run. Ask for encode or decode, the message, and the shift number.
+#   Lowercase the direction and the message. Pass all three into caesar by keyword.
+
+# TODO 9: Ask whether to go again: "Type 'yes' if you want to restart, 'no' if you want to continue:".
+#   "yes" keeps the loop going. "no" stops it.
 
 from art import logo
 print(logo)

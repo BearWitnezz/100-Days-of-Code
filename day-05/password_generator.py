@@ -1,6 +1,21 @@
-# TODO 1: Ask how many letters, symbols, and numbers the password should include.
-# TODO 2: Easy version: pick that many of each, in that order, and print the password.
-# TODO 3: Hard version: pick the same characters, shuffle them, and print the result.
+# TODO 1: Import random. Keep a list of lowercase and uppercase letters, a list of digits 0 through 9, and a list
+#   of the symbols ! # $ % & ( ) * +.
+
+# TODO 2: Print "Welcome to the PyPassword Generator!".
+
+# TODO 3: Ask how many letters, how many symbols, and how many numbers. Save each answer as an int.
+
+# TODO 4: Easy version: start the password as an empty string. Add that many random letters, then that many random
+#   symbols, then that many random numbers.
+
+# TODO 5: Print the easy password.
+
+# TODO 6: Hard version: collect the same picks in a list instead of a string. Letters first, then symbols, then
+#   numbers.
+
+# TODO 7: Shuffle that list, then walk it and join the characters into one string.
+
+# TODO 8: Print the shuffled password.
 
 import random
 

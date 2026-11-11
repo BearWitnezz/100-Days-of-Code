@@ -1,6 +1,23 @@
-# TODO 1: Define the four operations and map +, -, *, and / to them.
-# TODO 2: In calculator(), show the logo and print each step as an equation.
-# TODO 3: On y, continue from the last answer. On n, start calculator() over.
+# TODO 1: Import the logo from art.
+
+# TODO 2: Define addition, subtraction, multiplication, and division. Each takes two numbers, has a docstring,
+#   and returns the result.
+
+# TODO 3: Map "+", "-", "*", and "/" to those four functions.
+
+# TODO 4: Define calculator() with a docstring. It prints the logo, asks "What's the first number?: " as a float,
+#   and keeps a calculating flag set to True.
+
+# TODO 5: While calculating, print each operation symbol, ask "Pick an operation: " and "What's the second
+#   number?: ", call the mapped function, and print the step as "{first} {symbol} {second} = {answer}".
+
+# TODO 6: Ask "Type 'y' to continue calculating with {answer}, or type 'n' to start a new calculation: " and
+#   lowercase the answer.
+
+# TODO 7: On y, set the first number to that answer and keep asking for the next operation and the next number.
+#   Print each new step the same way. y again keeps the newest answer as the first number.
+
+# TODO 8: On n, from either question, call calculator() so a new calculation starts from the logo.
 
 from art import logo
 def addition(n1, n2):

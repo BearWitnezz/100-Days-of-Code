@@ -1,6 +1,12 @@
-# TODO 1: Add up every price in the job list.
-# TODO 2: Keep the highest price seen while looping.
-# TODO 3: Print the day's total and the most expensive job.
+# TODO 1: Start from the job prices 150, 1200, 250, 150, and 75.
+
+# TODO 2: Start a day's total at 0 and a most-expensive tracker at 0.
+
+# TODO 3: Loop through every price. Add it to the day's total.
+
+# TODO 4: In that same loop, replace the most expensive price whenever the current price is higher.
+
+# TODO 5: After the loop, print the day's total, then print the most expensive job.
 
 job_prices = [150, 1200, 250, 150, 75]
 

@@ -1,3 +1,18 @@
+# TODO 1: Define a CoffeeMaker class. It is the machine that holds the ingredients and makes the drink.
+
+# TODO 2: In __init__, give the machine a resources dictionary: 300 water, 200 milk, and 100 coffee.
+#   Nudge: anything the object owns needs self. in front of it.
+
+# TODO 3: report() prints three lines from those resources: "Water: {amount}ml", "Milk: {amount}ml", and
+#   "Coffee: {amount}g".
+
+# TODO 4: is_resource_sufficient(drink) starts can_make at True. For each item in drink.ingredients, if the
+#   drink needs more than the machine has, print "Sorry there is not enough {item}." and set can_make to False.
+#   Return can_make.
+
+# TODO 5: make_coffee(order) subtracts each of order.ingredients from the resources, then prints
+#   "Here is your {order.name} ☕️. Enjoy!".
+
 class CoffeeMaker:
     """Models the machine that makes the coffee"""
     def __init__(self):
