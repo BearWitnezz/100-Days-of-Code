@@ -1,3 +1,7 @@
+# TODO 1: Save each contractor's name and bid until someone says there are no more.
+# TODO 2: Find the winner by comparing bids, not by adding them together.
+# TODO 3: Print who gets the job and the winning bid.
+
 print("Welcome to the Contractor Bid Board!")
 bid = {}
 bidding_done = False

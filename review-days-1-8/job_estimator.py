@@ -1,3 +1,9 @@
+# TODO 1: Ask for the customer's name and how many feet of pipe the job needs.
+# TODO 2: Add up the saved job prices. Over 500 is a big job, otherwise a quick job, and say whether the total is even.
+# TODO 3: Pick a random fitting and print the name, that fitting, and the rounded total.
+# TODO 4: Call pipe_cost with the pipe length, a price per foot, and a fittings count.
+# TODO 5: Ask whether to estimate another job, and stop when the answer is no.
+
 import random
 
 list_of_fittings = ['elbow', 'tailpiece', 'wastearm', 'ptrap', '45']
@@ -6,6 +12,7 @@ game_not_over = True
 
 
 def pipe_cost(length_feet, price_per_foot, fittings):
+    """Print the cost of the pipe and fittings for the job."""
     print((length_feet * price_per_foot) + (4 * fittings))
 
 

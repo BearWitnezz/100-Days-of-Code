@@ -1,9 +1,11 @@
 def turn_right():
+    """Turn Reeborg to the right."""
     turn_left()
     turn_left()
     turn_left()
     
 def change_direction():
+    """Turn right and take one step."""
     turn_right()
     move()
     

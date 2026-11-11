@@ -1,3 +1,8 @@
+# TODO 1: Pick a plumbing fitting and show a blank for each letter.
+# TODO 2: Ask for letters until the word is complete or the lives hit zero.
+# TODO 3: Fill the letter in wherever it appears, and lose a life on a miss.
+# TODO 4: Print whether the player won or lost.
+
 import random
 plumbing_words = ["elbow","coupling","flange","valve"]
 computer_choice = random.choice(plumbing_words)

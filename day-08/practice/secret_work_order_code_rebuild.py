@@ -1,7 +1,12 @@
+# TODO 1: Define caesar() so encode shifts forward and decode shifts backward.
+# TODO 2: Leave non-letters unchanged and wrap around the alphabet.
+# TODO 3: Reject a bad direction, then ask whether to code another message.
+
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 reset = True
 def caesar(message, shift_number, encode_or_decode):
+    """Shift a message forward to encode it or backward to decode it."""
     coded_message = ""
     if encode_or_decode == 'encode':
         for position in message:

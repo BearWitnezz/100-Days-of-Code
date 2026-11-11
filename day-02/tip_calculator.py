@@ -1,3 +1,7 @@
+# TODO 1: Ask for the bill, a tip of 10, 12, or 15 percent, and how many people split it.
+# TODO 2: Work out each person's share with the tip included.
+# TODO 3: Round to the nearest cent and print what each person should pay.
+
 print("Welcome to the tip calculator!")
 total = float(input("What was the total bill? $"))
 tip = input("How much tip would you like to give? 10, 12, or 15? ")

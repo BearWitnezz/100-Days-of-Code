@@ -1,3 +1,7 @@
+# TODO 1: Create the menu, the coffee maker, and the money machine.
+# TODO 2: Keep asking for a drink until the user turns the machine off.
+# TODO 3: On report, show resources and profit. Otherwise check the drink, take payment, and make it.
+
 from menu import Menu
 from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine

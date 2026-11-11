@@ -1,3 +1,8 @@
+# TODO 1: Store ASCII art for rock, paper, and scissors.
+# TODO 2: Ask the player for 0, 1, or 2 and show that picture.
+# TODO 3: Let the computer choose at random and show its picture.
+# TODO 4: Print a win, a loss, or a tie, and reject any other input.
+
 import random
 
 rock = '''

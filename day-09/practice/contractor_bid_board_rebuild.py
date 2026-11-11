@@ -1,3 +1,7 @@
+# TODO 1: Save each bid, and clear the screen while another contractor is still bidding.
+# TODO 2: When bidding stops, keep the name with the highest bid.
+# TODO 3: Print the winner and that bid.
+
 bids = {}
 reset = True
 winner = ""

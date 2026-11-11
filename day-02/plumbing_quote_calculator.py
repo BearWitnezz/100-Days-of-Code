@@ -1,3 +1,7 @@
+# TODO 1: Ask for hours worked, the hourly rate, the material cost, and the sales tax percent.
+# TODO 2: Price the labor, add tax onto the materials, and add those together for the quote.
+# TODO 3: Print labor, taxed materials, and the total in dollars and cents.
+
 print("Welcome to the Plumbing Job Quote Calculator")
 hours_worked = float(input("How many hours did you work? "))
 hourly_rate = float(input("What is your hourly rate? $"))

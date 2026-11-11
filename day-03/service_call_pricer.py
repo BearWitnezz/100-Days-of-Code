@@ -1,3 +1,7 @@
+# TODO 1: Start the bill at zero and price a drain, water heater, or leak.
+# TODO 2: Add an emergency fee, then take 10 percent off when the customer is 65 or older.
+# TODO 3: Add an after-hours fee for the weekend or after 6pm, and print the total.
+
 bill = 0
 print("Welcome to the Service Call Pricer!")
 job_type = input("What is the type of job being performed? "

@@ -1,6 +1,11 @@
+# TODO 1: Welcome the player and pick a secret number from 1 to 100.
+# TODO 2: Give 10 attempts on easy and 5 attempts on hard.
+# TODO 3: After each guess, say too high, too low, or correct, and stop when the attempts run out.
+
 import random
 from art import logo
 def make_a_guess(attempts):
+        """Take guesses until the number is found or the attempts run out."""
         game_over = False
         print(f"You have {attempts} attempts remaining to guess the number.")
         while not game_over:

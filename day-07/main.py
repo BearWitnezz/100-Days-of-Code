@@ -1,3 +1,8 @@
+# TODO 1: Pick a random word, show the logo, and print a blank for every letter.
+# TODO 2: Ask for letters until the word is filled in or no lives remain.
+# TODO 3: Reveal correct letters. A repeated guess should not cost another life.
+# TODO 4: On a new miss, lose a life, show the hangman stage, and announce a win or a loss.
+
 from hangman_words import word_list
 from hangman_art import logo
 from hangman_art import stages

@@ -1,3 +1,7 @@
+# TODO 1: Welcome the user and ask how many letters, numbers, and symbols to use.
+# TODO 2: Build the order code in that order by adding one random character at a time.
+# TODO 3: Print the finished order code.
+
 import random
 letters = ["P","V","C","T","E"]
 numbers = ["0","1","2","3","4","5","6","7","8","9"]
