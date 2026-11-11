@@ -10,9 +10,9 @@ The logo is already in `art.py`. This program prints it once, before it asks any
 flowchart TD
     start([Start]) --> logo[Show the logo]
     logo --> ask[Ask: encode or decode, the message, the shift]
-    ask --> direction{Decode?}
-    direction -- yes --> flip[Flip the shift the other way]
-    direction -- no --> letter[Take the next character]
+    ask --> askdirection{Decode?}
+    askdirection -- yes --> flip[Flip the shift the other way]
+    askdirection -- no --> letter[Take the next character]
     flip --> letter
     letter --> alpha{Is it in the alphabet?}
     alpha -- no --> keep[Keep it unchanged]

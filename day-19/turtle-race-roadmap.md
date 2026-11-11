@@ -12,16 +12,16 @@ flowchart TD
     popup --> printbet[Print that bet]
     printbet --> line[Line up one turtle of each color]
     line --> bet{Did they enter a bet?}
-    bet -- no --> click[Wait for a click]
+    bet -- no --> waitclick[Wait for a click]
     bet -- yes --> step[Move every turtle forward by a small random amount]
     step --> finish{Any turtle past the finish line?}
     finish -- no --> step
     finish -- yes --> won{Is it the color they bet?}
     won -- yes --> yesmsg[Say they won and name the color]
     won -- no --> nomsg[Say they lost and name the color]
-    yesmsg --> click
-    nomsg --> click
-    click --> stop([Stop])
+    yesmsg --> waitclick
+    nomsg --> waitclick
+    waitclick --> stop([Stop])
 ```
 
 **One stage at a time:** write a stage, run it, and make sure it works before you touch the next one. If something breaks, it is almost always in the stage you just wrote.
