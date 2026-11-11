@@ -11,8 +11,8 @@ flowchart TD
     askdir --> ok{Encode or decode?}
     ok -- neither --> bad[Say the input is invalid]
     ok -- encode or decode --> ask[Ask for the message and the shift]
-    ask --> call[Call caesar]
-    call --> way{Which direction?}
+    ask --> callcaesar[Call caesar]
+    callcaesar --> way{Which direction?}
     way -- encode --> forward[Shift each letter forward and wrap]
     way -- decode --> back[Shift each letter backward and wrap]
     forward --> keep[Leave non-letters unchanged and print]

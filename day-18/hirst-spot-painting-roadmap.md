@@ -18,8 +18,8 @@ flowchart TD
     up --> rows{10 rows done?}
     rows -- no --> row
     rows -- yes --> hide[Hide the turtle]
-    hide --> click[Wait for a click]
-    click --> stop([Stop])
+    hide --> waitclick[Wait for a click]
+    waitclick --> stop([Stop])
 ```
 
 **One stage at a time:** write a stage, run it, and make sure it works before you touch the next one. If something breaks, it is almost always in the stage you just wrote.

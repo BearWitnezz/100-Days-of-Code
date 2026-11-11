@@ -7,8 +7,8 @@ Follow the stages in order. Finish and test one stage before you start the next,
 ```mermaid
 flowchart TD
     start([Start]) --> ask[Ask: encode or decode?<br/>message? shift?]
-    ask --> call[Call the function<br/>with message, shift, direction]
-    call --> dir{Encode or decode?}
+    ask --> callfn[Call the function<br/>with message, shift, direction]
+    callfn --> dir{Encode or decode?}
     dir -- decode --> flip[Flip the shift the other way]
     dir -- encode --> loop
     flip --> loop[Go through each letter]

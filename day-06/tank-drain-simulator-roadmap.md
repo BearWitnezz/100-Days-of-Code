@@ -10,8 +10,8 @@ flowchart TD
     pumpfn --> ask[Ask how many gallons are in the tank]
     ask --> left{Any gallons left?}
     left -- no --> done[Print how many passes it took]
-    left -- yes --> call[Call pump_on]
-    call --> enough{At least 7 gallons left?}
+    left -- yes --> callpump[Call pump_on]
+    callpump --> enough{At least 7 gallons left?}
     enough -- yes --> minus[Subtract 7]
     enough -- no --> empty[Set the tank to 0]
     minus --> count[Count the pass and print gallons left]
