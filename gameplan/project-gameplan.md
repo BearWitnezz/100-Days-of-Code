@@ -26,11 +26,6 @@ Practice Coach logs every spot I got stuck on and turns it into flashcards, a po
 
 **Side rule:** Add a docstring to every function I create so I know what it's for.
 
-```python
-def process_coins():
-    """Ask for coins and return the total in dollars."""
-```
-
 ---
 
 ## Roadmap skeleton
