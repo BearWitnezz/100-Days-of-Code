@@ -1,3 +1,19 @@
+# TODO 1: Define a MenuItem class. __init__ takes a name, water, milk, coffee, and cost.
+
+# TODO 2: Save the name and the cost on the item. Store water, milk, and coffee together in an ingredients
+#   dictionary.
+
+# TODO 3: Define a Menu class. In __init__, build a list of three MenuItem drinks:
+#   latte (200 water, 150 milk, 24 coffee, cost 2.5),
+#   espresso (50 water, 0 milk, 18 coffee, cost 1.5),
+#   cappuccino (250 water, 50 milk, 24 coffee, cost 3).
+
+# TODO 4: get_items() walks that list and returns every drink name with a "/" after it, as one string.
+
+# TODO 5: find_drink(order_name) walks the menu. When a drink's name matches, return that MenuItem.
+
+# TODO 6: If no drink matches, print "Sorry that item is not available."
+
 class MenuItem:
     """Models each Menu Item."""
     def __init__(self, name, water, milk, coffee, cost):

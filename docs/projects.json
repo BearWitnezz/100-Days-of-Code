@@ -118,9 +118,9 @@
       "day": 11,
       "description": "Play a hand of Blackjack against the computer without going over 21.",
       "howToPlay": "Type y to play or n to quit. Type y to take another card or n to pass. After the hand, type y to play again or n to stop.",
-      "entry": "../day-11/practice/blackjack.py",
+      "entry": "../day-11/blackjack.py",
       "files": [
-        { "path": "art.py", "src": "../day-11/practice/art.py" }
+        { "path": "art.py", "src": "../day-11/art.py" }
       ],
       "accent": "#d7f08a"
     },
@@ -130,9 +130,9 @@
       "day": 12,
       "description": "Guess a secret number between 1 and 100 before your guesses run out.",
       "howToPlay": "Type easy for 10 guesses or hard for 5. Then type a whole number each time it asks you to guess.",
-      "entry": "../day-12/practice/number_guessing.py",
+      "entry": "../day-12/number_guessing.py",
       "files": [
-        { "path": "art.py", "src": "../day-12/practice/art.py" }
+        { "path": "art.py", "src": "../day-12/art.py" }
       ],
       "accent": "#67e8f9"
     },

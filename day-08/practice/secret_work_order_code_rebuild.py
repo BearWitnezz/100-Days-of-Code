@@ -1,6 +1,24 @@
-# TODO 1: Define caesar() so encode shifts forward and decode shifts backward.
-# TODO 2: Leave non-letters unchanged and wrap around the alphabet.
-# TODO 3: Reject a bad direction, then ask whether to code another message.
+# TODO 1: Store the lowercase alphabet, a through z. Start a reset flag at True.
+
+# TODO 2: Define caesar(message, shift_number, encode_or_decode) with a docstring. Encode shifts forward. Decode
+#   shifts backward.
+
+# TODO 3: Encode walks the message. A letter's new index is (its alphabet index + the shift) modulo 26. Any other
+#   character stays as it is. Print the coded message.
+
+# TODO 4: Decode does the same walk, with (index - shift) modulo 26.
+
+# TODO 5: Print "Welcome to the Secret Work Order Code!".
+
+# TODO 6: Loop while reset is True. Ask "Encode or Decode?" and lowercase the answer.
+
+# TODO 7: If the direction is neither "encode" nor "decode", print "Invalid input. Please try again." and do not
+#   ask for a message.
+
+# TODO 8: Otherwise ask for the message and the shift number. Lowercase the message, turn the shift into an int,
+#   and call caesar.
+
+# TODO 9: Then ask "Do you want to continue? (y/n)". "n" sets reset to False.
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 

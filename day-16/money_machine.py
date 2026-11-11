@@ -1,3 +1,22 @@
+# TODO 1: Define a MoneyMachine class. It takes payment and tracks profit.
+
+# TODO 2: Give the class a CURRENCY of "$" and a COIN_VALUES dictionary: quarters 0.25, dimes 0.10, nickles 0.05,
+#   and pennies 0.01.
+
+# TODO 3: In __init__, start profit at 0 and money_received at 0.
+
+# TODO 4: report() prints "Money: " plus the currency symbol and the profit.
+
+# TODO 5: process_coins() prints "Please insert coins." For each coin in COIN_VALUES, ask "How many {coin}?: ",
+#   multiply that count by the coin's value, and add it to money_received. Return money_received.
+
+# TODO 6: make_payment(cost) calls process_coins(). If money_received covers the cost, round the change to 2
+#   decimal places, print "Here is {currency}{change} in change.", add the cost to profit, set money_received
+#   back to 0, and return True.
+
+# TODO 7: If the money is short, print "Sorry that's not enough money. Money refunded.", set money_received
+#   back to 0, and return False.
+
 class MoneyMachine:
     """Models the machine that takes payment and tracks profit."""
 

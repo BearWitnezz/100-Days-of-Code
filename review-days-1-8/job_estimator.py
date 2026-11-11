@@ -1,8 +1,29 @@
-# TODO 1: Ask for the customer's name and how many feet of pipe the job needs.
-# TODO 2: Add up the saved job prices. Over 500 is a big job, otherwise a quick job, and say whether the total is even.
-# TODO 3: Pick a random fitting and print the name, that fitting, and the rounded total.
-# TODO 4: Call pipe_cost with the pipe length, a price per foot, and a fittings count.
-# TODO 5: Ask whether to estimate another job, and stop when the answer is no.
+# TODO 1: Import random. The fittings are elbow, tailpiece, wastearm, ptrap, and 45. The saved job prices are
+#   130, 40, 83, 67, and 92.
+
+# TODO 2: Start a flag at True so the estimator can run more than one job.
+
+# TODO 3: Define pipe_cost(length_feet, price_per_foot, fittings) with a docstring. It prints (length times the
+#   price per foot) plus (4 times the fittings count).
+
+# TODO 4: Loop while another estimate is wanted. Each pass, reset the job total to 0 and pick one fitting at
+#   random.
+
+# TODO 5: Print "Welcome!". Ask for the customer's name, and ask how many feet of pipe as an int. Print both
+#   answers back.
+
+# TODO 6: Add every saved job price into the job total, then print that total.
+
+# TODO 7: A total over 500 prints "Big job". Otherwise print "Quick job".
+
+# TODO 8: A total divisible by 2 prints "Even". Otherwise print "Odd".
+
+# TODO 9: Print the customer's name, the random fitting, and "Total: $" with the total rounded to 2 decimal places.
+
+# TODO 10: Call pipe_cost with the feet of pipe, a price per foot of 4, and a fittings count of 6.
+#   Nudge: pass them as keyword arguments.
+
+# TODO 11: Ask "Do you want to continue? (y/n)" and lowercase the answer. y runs another estimate. n stops the loop.
 
 import random
 

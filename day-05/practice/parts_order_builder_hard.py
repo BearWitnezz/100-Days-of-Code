@@ -1,6 +1,19 @@
-# TODO 1: Welcome the user and ask how many letters, numbers, and symbols to use.
-# TODO 2: Collect random picks in a list, then shuffle that list.
-# TODO 3: Join the shuffled picks into one order code and print it.
+# TODO 1: Import random. Use the same letters (P, V, C, T, E), numbers (0 through 9), and symbols
+#   (! @ # $ % ^ & *).
+
+# TODO 2: Start the order code as an empty list, not a string.
+
+# TODO 3: Print "Welcome to the Parts Order Builder".
+
+# TODO 4: Ask how many letters, how many numbers, and how many symbols. Save each answer as an int.
+
+# TODO 5: Append that many random letters, then that many random numbers, then that many random symbols.
+
+# TODO 6: Shuffle the list.
+
+# TODO 7: Walk the shuffled list and join the characters into one new string.
+
+# TODO 8: Print "Your order code is: " and that string.
 
 import random
 letters = ["P","V","C","T","E"]

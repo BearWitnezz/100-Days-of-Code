@@ -1,7 +1,34 @@
-# TODO 1: Store the drink menu and how much water, milk, and coffee the machine starts with.
-# TODO 2: Write process_coins() to take quarters, dimes, nickles, and pennies and return the total.
-# TODO 3: Write is_resource_sufficient() to catch an ingredient the machine does not have enough of.
-# TODO 4: Until the user types off, print a report or make the drink when resources and payment cover it, and give change.
+# TODO 1: Store the menu. Espresso needs 50 water and 18 coffee and costs 1.5. Latte needs 200 water, 150 milk,
+#   and 24 coffee and costs 2.5. Cappuccino needs 250 water, 100 milk, and 24 coffee and costs 3.0.
+#   Each drink has an "ingredients" dictionary and a "cost".
+
+# TODO 2: Start the machine with 300 water, 200 milk, and 100 coffee.
+
+# TODO 3: Define process_coins() with a docstring. Print "Please insert coins." Ask how many quarters, dimes,
+#   nickles, and pennies. Return quarters * 0.25 + dimes * 0.10 + nickles * 0.05 + pennies * 0.01.
+
+# TODO 4: Define is_resource_sufficient(order_ingredients) with a docstring. Start a flag at True. For each
+#   ingredient, if the machine has less than the order needs, print "Sorry, there is not enough {item}" and set
+#   the flag to False. Return the flag.
+#   Nudge: set the flag to False inside the shortage check. Don't set it back to True inside the loop.
+
+# TODO 5: Start the money taken at 0, and start the machine as on. Loop until it is turned off.
+
+# TODO 6: Each turn, print "Welcome to the Coffee Machine!" and ask "What would you like?
+#   (espresso/latte/cappuccino): ". Lowercase the answer.
+
+# TODO 7: "off" turns the machine off. "report" prints each resource and its amount, then "Money: $" plus the
+#   money taken so far.
+
+# TODO 8: For a drink, check that its ingredients are still in stock. Only then ask for the coins.
+
+# TODO 9: If the coins are less than the drink's cost, print "Sorry, there is not enough money".
+
+# TODO 10: Otherwise add the drink's cost to the money, round the change to 2 decimal places, and print
+#   "Here is ${change} in change."
+
+# TODO 11: Subtract each ingredient that drink used from the resources, then print "Here is your {drink} ☕.
+#   Enjoy!".
 
 MENU = {
     "espresso": {"ingredients": {"water": 50, "coffee": 18}, "cost": 1.5},

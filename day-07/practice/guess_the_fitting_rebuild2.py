@@ -1,7 +1,27 @@
-# TODO 1: Pick a fitting at random and start the board as blanks.
-# TODO 2: Take guesses until the player wins or runs out of lives.
-# TODO 3: Do not charge a life for a letter that was already tried.
-# TODO 4: Reveal the word on a loss, and tell the player when they win.
+# TODO 1: Import random. The fittings are valve, anglestop, elbow, and wastearm.
+
+# TODO 2: Start the board as an empty list, lives at 6, game_over as False, and an empty already-guessed list.
+
+# TODO 3: Pick one fitting at random. Print "Welcome to Guess the Fitting!".
+
+# TODO 4: Append one "_" for each letter, and print the board.
+
+# TODO 5: Loop while the game is not over. Ask "Guess a letter: " and lowercase it.
+
+# TODO 6: If the letter is not in the fitting and has not been guessed, lose one life, print the lives that are
+#   left and the board, and record the guess.
+
+# TODO 7: If that miss was already guessed, print "You already guessed {letter}!" and the board. Do not take
+#   another life.
+
+# TODO 8: If the letter is in the fitting but was already guessed, print that same already-guessed message and
+#   the board.
+
+# TODO 9: Otherwise, fill the letter into every matching position, record it, and print the board.
+
+# TODO 10: Stop when lives hit 0 or the board has no "_" left.
+
+# TODO 11: On a loss, print "You lost! The word was " and the fitting. On a cleared board, print "You win!".
 
 import random
 plumbing_words = ["valve", "anglestop", "elbow", "wastearm"]

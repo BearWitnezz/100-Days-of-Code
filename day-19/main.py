@@ -1,7 +1,28 @@
-# TODO 1: Ask which turtle color the user wants to bet on.
-# TODO 2: Line up one turtle of each color at the starting line.
-# TODO 3: Move every turtle forward by a small random amount until one finishes.
-# TODO 4: Print whether the bet won, and close the window on a click.
+# TODO 1: Import Turtle and Screen from turtle, and import random. Start the race as not running.
+
+# TODO 2: Make a screen that is 500 wide and 400 tall.
+
+# TODO 3: Pop up a text box titled "Make your bet" that asks "Which turtle will win the race? Enter a color: ".
+#   Print whatever the user typed.
+
+# TODO 4: The colors are red, orange, yellow, green, blue, and violet. Start an empty list to hold the turtles.
+
+# TODO 5: The starting line is x = -230. The first turtle's y is -100, and each next turtle sits 50 higher.
+
+# TODO 6: For each color, make a turtle with the "turtle" shape, set its color, lift the pen, send it to its
+#   starting x and y, then append it to the list.
+
+# TODO 7: If the user actually typed a bet, start the race.
+
+# TODO 8: While the race is on, every turtle moves forward by a random distance from 0 to 10.
+
+# TODO 9: The first turtle whose x coordinate is past 230 wins. Stop the race and read that turtle's pen color.
+#   Nudge: leave the turtle loop as soon as one turtle wins, so a later turtle on the same pass cannot also win.
+
+# TODO 10: If that color is the bet, print "You won! The {color} turtle is the winner!". Otherwise print
+#   "You lost! The {color} turtle is the winner!".
+
+# TODO 11: Close the window when it is clicked.
 
 from turtle import Turtle, Screen
 import random

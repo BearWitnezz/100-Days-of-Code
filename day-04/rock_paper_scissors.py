@@ -1,7 +1,20 @@
-# TODO 1: Store ASCII art for rock, paper, and scissors.
-# TODO 2: Ask the player for 0, 1, or 2 and show that picture.
-# TODO 3: Let the computer choose at random and show its picture.
-# TODO 4: Print a win, a loss, or a tie, and reject any other input.
+# TODO 1: Import random.
+
+# TODO 2: Store the ASCII art for rock, paper, and scissors in three strings. Put those strings in a list in that
+#   order, so 0 is rock, 1 is paper, and 2 is scissors.
+
+# TODO 3: Ask "What do you choose? Type 0 for Rock, 1 for Paper, or 2 for Scissors". Keep the answer as text.
+
+# TODO 4: Print the rock art for "0", the paper art for "1", and the scissors art for "2".
+
+# TODO 5: Only when the answer is "0", "1", or "2", let the computer pick one of the three pictures at random and
+#   print "Computer chose:" plus that picture.
+
+# TODO 6: Rock ties rock, loses to paper, and beats scissors. Paper beats rock, ties paper, and loses to scissors.
+#   Scissors loses to rock, beats paper, and ties scissors. Print "It's a tie!", "You lose!", or "You win!".
+#   Nudge: the player's answer is the text "0", "1", or "2". The computer's choice is the art string itself.
+
+# TODO 7: Any other input prints "Invalid input" and does not play a round.
 
 import random
 
