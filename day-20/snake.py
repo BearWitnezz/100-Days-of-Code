@@ -8,6 +8,7 @@ LEFT = 180
 RIGHT = 0
 
 class Snake:
+    """Set up the snake object."""
     def __init__(self):
         self.snake = []
         self.create_snake()
