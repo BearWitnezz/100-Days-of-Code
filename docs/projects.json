@@ -180,6 +180,26 @@
       "howToPlay": "Type a color: red, orange, yellow, green, blue, or violet.",
       "entry": "../day-19/main.py",
       "accent": "#f0abfc"
+    },
+    {
+      "id": "snake-game",
+      "title": "Snake",
+      "day": 21,
+      "description": "Steer a snake to eat food, grow longer, and avoid the walls and your tail.",
+      "howToPlay": "Run main.py on your computer. Use the arrow keys to steer. Eat the food; don't hit the walls or your tail.",
+      "entry": "../day-21/main.py",
+      "files": [
+        { "path": "snake.py", "src": "../day-21/snake.py" },
+        { "path": "food.py", "src": "../day-21/food.py" },
+        { "path": "scoreboard.py", "src": "../day-21/scoreboard.py" }
+      ],
+      "accent": "#7cff8e",
+      "playable": false,
+      "fallback": {
+        "reason": "This game needs live arrow-key controls in a Turtle window, which the browser arcade can't do. Run main.py on your computer to play.",
+        "href": "https://github.com/BearWitnezz/100-Days-of-Code/tree/main/day-21",
+        "linkLabel": "Open the Day 21 files on GitHub"
+      }
     }
   ]
 }
