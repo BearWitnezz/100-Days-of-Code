@@ -1,3 +1,16 @@
+# TODO 1: Create a Snake class. In __init__, make a list for the segments, call create_snake(), and after the snake is built, save the head as its own attribute (the first item in the list).
+#   Nudge: anything the class owns needs self. in front of it.
+
+# TODO 2: Pull STARTING_POSITIONS, MOVE_DISTANCE, UP, DOWN, LEFT, and RIGHT out as ALL_CAPS constants at the top of the file.
+#   Nudge: headings go counterclockwise from 0 (east): UP 90, DOWN 270, LEFT 180, RIGHT 0.
+
+# TODO 3: create_snake() loops over STARTING_POSITIONS and builds each segment (white square, pen up, goto that position, append to the list). Give every function a one-sentence docstring.
+
+# TODO 4: move() does the tail-follows-head loop (each segment goes to where the one ahead of it was, working back to front), then the head moves forward MOVE_DISTANCE.
+
+# TODO 5: Add up, down, left, and right methods that turn the head with setheading, and don't let the snake reverse into itself.
+#   Nudge: only change heading if it's not already going the opposite way. heading() is a method, so it needs parentheses.
+
 from turtle import Turtle
 
 STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
