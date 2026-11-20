@@ -180,6 +180,20 @@
       "howToPlay": "Type a color: red, orange, yellow, green, blue, or violet.",
       "entry": "../day-19/main.py",
       "accent": "#f0abfc"
+    },
+    {
+      "id": "us-states-game",
+      "title": "U.S. States Game",
+      "day": 25,
+      "description": "Guess the 50 states. Each correct name lands on the map.",
+      "howToPlay": "Type a state name. Any capitalization works. Type Exit to stop and see the ones you missed.",
+      "entry": "../day-25/main.py",
+      "files": [
+        { "path": "50_states.csv", "src": "../day-25/50_states.csv" },
+        { "path": "blank_states_img.gif", "src": "../day-25/blank_states_img.gif" }
+      ],
+      "accent": "#86efac",
+      "playable": true
     }
   ]
 }
