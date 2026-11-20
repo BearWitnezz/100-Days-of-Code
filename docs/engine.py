@@ -3,6 +3,8 @@
 # question back to the page. screen.textinput() asks after any turtles
 # already on the screen have been drawn.
 # Turtle drawings are sent back for the page to paint.
+# screen.addshape() can load a .gif, and turtle.write() sends words
+# back with the drawing.
 # You do not run this file yourself.
 
 import builtins
@@ -53,6 +55,16 @@ class _LineLimit:
         return self
 
 
+def _wants_pandas(text):
+    # Importing pandas walks a lot of Python. Do it before the step
+    # limit starts, or the states game is stopped before it can ask.
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("import pandas") or stripped.startswith("from pandas "):
+            return True
+    return False
+
+
 parsed_answers = json.loads(USER_ANSWERS_JSON)
 if not isinstance(parsed_answers, list):
     parsed_answers = []
@@ -62,6 +74,12 @@ step_limit = int(globals().get("USER_STEP_LIMIT", 500000))
 filename = str(globals().get("USER_FILENAME") or "game.py")
 filename = filename.replace("\\", "/").split("/")[-1] or "game.py"
 source = USER_SOURCE if isinstance(USER_SOURCE, str) else str(USER_SOURCE)
+
+if _wants_pandas(source):
+    try:
+        import pandas
+    except Exception:
+        pass
 
 random.seed(seed)
 
@@ -79,17 +97,23 @@ sys.stderr = captured_err
 index = 0
 
 
-def arcade_input(prompt=""):
+def arcade_input(prompt="", echo=None):
     global index
     if prompt is None:
         prompt = ""
     else:
         prompt = str(prompt)
+    # echo is what gets printed with the answer. input() leaves it
+    # empty so the prompt is printed, same as before.
+    if echo is None:
+        echo_text = prompt
+    else:
+        echo_text = str(echo)
     if index >= len(answers):
         raise NeedInput(prompt)
     answer = answers[index]
     index += 1
-    sys.stdout.write(prompt)
+    sys.stdout.write(echo_text)
     sys.stdout.write(answer + "\n")
     return answer
 
@@ -105,8 +129,54 @@ turtle_state = {
     "height": 300,
     "bg": "#ffffff",
     "lines": [],
+    "labels": [],
     "frames": [],
+    "shapes": {},
+    "title": "",
 }
+
+
+def _gif_size(path):
+    try:
+        handle = open(path, "rb")
+    except OSError:
+        return None
+    try:
+        header = handle.read(10)
+    finally:
+        handle.close()
+    if len(header) < 10 or header[:6] not in (b"GIF87a", b"GIF89a"):
+        return None
+    width = header[6] + (header[7] << 8)
+    height = header[8] + (header[9] << 8)
+    if width <= 0 or height <= 0:
+        return None
+    return width, height
+
+
+def _font_css(font):
+    if isinstance(font, str) and font:
+        return font
+    family = "Arial"
+    size = 8
+    style = ""
+    weight = ""
+    if isinstance(font, (tuple, list)):
+        if len(font) >= 1 and font[0]:
+            family = str(font[0])
+        if len(font) >= 2:
+            try:
+                size = int(float(font[1]))
+            except (TypeError, ValueError):
+                size = 8
+        if len(font) >= 3 and font[2]:
+            extra = str(font[2]).lower()
+            if "bold" in extra:
+                weight = "bold"
+            if "italic" in extra:
+                style = "italic"
+    parts = [part for part in (style, weight, "%spt" % size, family) if part]
+    return " ".join(parts)
 
 
 def _install_turtle():
@@ -129,12 +199,45 @@ def _install_turtle():
                 return
             self._ready = True
             self._turtles = []
+            self._setup_called = False
             turtle_state["used"] = True
 
         def setup(self, width=400, height=300, startx=None, starty=None):
             turtle_state["used"] = True
+            self._setup_called = True
             turtle_state["width"] = _pixels(width, 400)
             turtle_state["height"] = _pixels(height, 300)
+
+        def title(self, titlestring):
+            turtle_state["used"] = True
+            turtle_state["title"] = "" if titlestring is None else str(titlestring)
+
+        def addshape(self, name, shape=None):
+            turtle_state["used"] = True
+            filename = "" if name is None else str(name)
+            if shape is not None:
+                turtle_state["shapes"][filename] = {"type": "polygon"}
+                return None
+            if not filename.lower().endswith(".gif"):
+                raise RuntimeError("Turtle shapes loaded from a file have to be a .gif.")
+            size = _gif_size(filename)
+            if size is None:
+                raise RuntimeError(
+                    "Could not open the shape image %s. It needs to sit next to the program."
+                    % (filename,)
+                )
+            turtle_state["shapes"][filename] = {
+                "type": "image",
+                "width": size[0],
+                "height": size[1],
+            }
+            # The picture is the window. State coordinates are measured
+            # from the middle of it, so the screen has to be that size
+            # unless the program already chose one.
+            if not self._setup_called:
+                turtle_state["width"] = size[0]
+                turtle_state["height"] = size[1]
+            return None
 
         def textinput(self, title, prompt):
             turtle_state["used"] = True
@@ -148,7 +251,14 @@ def _install_turtle():
                 turtle_state["awaiting_bet"] = True
                 turtle_state["textinput_prompt"] = message
                 return ""
-            return arcade_input(message)
+            # A later question can carry the dialog title. That is where
+            # the states game keeps the score. The opening question stays
+            # prompt-only, and a typed answer is echoed with the prompt alone.
+            title_text = "" if title is None else str(title)
+            display = message
+            if title_text and message and title_text not in message:
+                display = title_text + "\n" + message
+            return arcade_input(display, message)
 
         def exitonclick(self):
             turtle_state["used"] = True
@@ -159,6 +269,7 @@ def _install_turtle():
                 turtle_state["output_before_motion"] = captured_out.getvalue()
             turtles = []
             for item in self._turtles:
+                shape_info = turtle_state["shapes"].get(item._shape, {})
                 turtles.append(
                     {
                         "x": item._x,
@@ -167,9 +278,15 @@ def _install_turtle():
                         "color": _color_name(item._pencolor),
                         "fill": _color_name(item._fillcolor),
                         "visible": bool(item._shown),
+                        "shape": item._shape,
+                        "image": shape_info.get("type") == "image",
                     }
                 )
-            frame = {"turtles": turtles, "lineCount": len(turtle_state["lines"])}
+            frame = {
+                "turtles": turtles,
+                "lineCount": len(turtle_state["lines"]),
+                "labelCount": len(turtle_state["labels"]),
+            }
             frames = turtle_state["frames"]
             if len(frames) < 4000:
                 frames.append(frame)
@@ -208,6 +325,37 @@ def _install_turtle():
 
         def penup(self):
             self._pen = False
+
+        def hideturtle(self):
+            self._shown = False
+
+        def showturtle(self):
+            self._shown = True
+
+        def shape(self, name=None):
+            if name is None:
+                return self._shape
+            filename = str(name)
+            builtin = ("classic", "turtle", "arrow", "circle", "square", "triangle")
+            if filename not in turtle_state["shapes"] and filename not in builtin:
+                raise RuntimeError("There is no shape named %s" % (filename,))
+            self._shape = filename
+            if turtle_state["shapes"].get(filename, {}).get("type") == "image":
+                self._screen._snapshot()
+
+        def write(self, arg, move=False, align="left", font=("Arial", 8, "normal")):
+            text_align = align if align in ("left", "center", "right") else "left"
+            turtle_state["labels"].append(
+                {
+                    "text": str(arg),
+                    "x": self._x,
+                    "y": self._y,
+                    "align": text_align,
+                    "color": _color_name(self._pencolor),
+                    "font": _font_css(font),
+                }
+            )
+            self._screen._snapshot()
 
         def goto(self, x, y=None):
             if y is None and isinstance(x, (tuple, list)) and len(x) == 2:
@@ -250,9 +398,24 @@ def _install_turtle():
             return default
         return int(number)
 
+    default_pen = {"pen": None}
+
+    def _getpen():
+        if default_pen["pen"] is None:
+            default_pen["pen"] = Turtle()
+        return default_pen["pen"]
+
+    def shape(name=None):
+        pen = _getpen()
+        if name is None:
+            return pen.shape()
+        pen.shape(name)
+        return None
+
     module = types.ModuleType("turtle")
     module.Turtle = Turtle
     module.Screen = Screen
+    module.shape = shape
     module.__file__ = "turtle.py"
     sys.modules["turtle"] = module
 
@@ -319,8 +482,10 @@ if turtle_state["used"]:
         "height": turtle_state["height"],
         "bg": turtle_state["bg"],
         "lines": turtle_state["lines"],
+        "labels": turtle_state["labels"],
         "frames": turtle_state["frames"],
         "outputBeforeMotion": turtle_state.get("output_before_motion", ""),
+        "title": turtle_state.get("title") or "",
     }
 
 ARCADE_RESULT = json.dumps(result_payload)

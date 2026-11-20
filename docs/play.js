@@ -21,6 +21,7 @@ const els = {
   termDone: document.getElementById("term-done"),
   turtleStage: document.getElementById("turtle-stage"),
   turtleCanvas: document.getElementById("turtle-canvas"),
+  turtleTitle: document.getElementById("turtle-title"),
   composer: document.getElementById("composer"),
   composerRow: document.getElementById("composer-row"),
   choices: document.getElementById("choices"),
@@ -60,6 +61,9 @@ let seedLocked = false;
 let runId = 0;
 let busy = false;
 let turtlePlayback = 0;
+let shapeImages = new Map();
+
+const BINARY_FILE = /\.(gif|png|jpe?g|webp|bmp|ico)$/i;
 
 const TURTLE_SHAPE = [
   [0, 16], [-2, 14], [-1, 10], [-4, 7], [-7, 9], [-9, 8], [-6, 5], [-7, 1],
@@ -110,6 +114,7 @@ async function init() {
     }
     paintHeading();
     files = await loadFiles(project);
+    shapeImages = await prepareShapeImages(files);
     showCode(false);
     if (project.playable === false) {
       showFallback();
@@ -149,7 +154,7 @@ function paintHeading() {
 
 async function loadFiles(item) {
   if (!item.entry) throw new Error("This game has no entry file in projects.json.");
-  const loaded = [{ name: baseName(item.entry), path: null, text: await loadText(item.entry) }];
+  const loaded = [{ name: baseName(item.entry), path: null, text: await loadText(item.entry), bytes: null }];
   for (const file of item.files || []) {
     if (!file || !file.path || !file.src) {
       throw new Error("Each extra file needs a path and a src.");
@@ -157,7 +162,11 @@ async function loadFiles(item) {
     if (file.path.startsWith("/") || file.path.includes("..")) {
       throw new Error("File path should look like words.py, not " + file.path);
     }
-    loaded.push({ name: file.path, path: file.path, text: await loadText(file.src) });
+    if (isBinaryFile(file.path)) {
+      loaded.push({ name: file.path, path: file.path, text: null, bytes: await loadBytes(file.src) });
+    } else {
+      loaded.push({ name: file.path, path: file.path, text: await loadText(file.src), bytes: null });
+    }
   }
   return loaded;
 }
@@ -196,9 +205,14 @@ async function runGame(focusInput) {
   try {
     const pyodide = await ensurePyodide();
     if (ticket !== runId) return;
-    writeFs(pyodide, baseName(project.entry), files[0].text);
+    if (sourceImportsPandas(files[0].text)) {
+      els.hint.textContent = "Loading the data tools…";
+      await pyodide.loadPackage("pandas");
+      if (ticket !== runId) return;
+    }
+    writeFs(pyodide, baseName(project.entry), files[0].bytes || files[0].text);
     for (const file of files) {
-      if (file.path) writeFs(pyodide, file.path, file.text);
+      if (file.path) writeFs(pyodide, file.path, file.bytes || file.text);
     }
     const engine = await loadEngine();
     pyodide.globals.set("USER_SOURCE", files[0].text);
@@ -313,6 +327,7 @@ function paintTurtle(scene, onDone, settle) {
   canvas.height = scene.height;
   canvas.setAttribute("aria-label", "Turtle screen, " + scene.width + " by " + scene.height);
   els.turtleStage.hidden = false;
+  if (els.turtleTitle) els.turtleTitle.textContent = scene.title || "turtle";
   const frames = Array.isArray(scene.frames) ? scene.frames : [];
   if (!frames.length) {
     drawTurtleFrame(canvas, scene, null);
@@ -325,9 +340,30 @@ function paintTurtle(scene, onDone, settle) {
     return;
   }
   const startIndex = firstFullField(frames);
+  const lastFrame = frames[frames.length - 1];
+  const startFrame = frames[startIndex];
+  const lastLabels = lastFrame && typeof lastFrame.labelCount === "number" ? lastFrame.labelCount : 0;
+  const startLabels = startFrame && typeof startFrame.labelCount === "number" ? startFrame.labelCount : 0;
+  // Names already on the map should stay put when the program ends.
+  // Replaying those frames would wipe the latest name and draw it again.
+  if (lastLabels > startLabels) {
+    drawTurtleFrame(canvas, scene, lastFrame);
+    if (onDone) {
+      requestAnimationFrame(() => {
+        if (token !== turtlePlayback) return;
+        onDone();
+      });
+    }
+    return;
+  }
   drawTurtleFrame(canvas, scene, frames[startIndex]);
   if (startIndex >= frames.length - 1) {
-    if (onDone) onDone();
+    if (onDone) {
+      requestAnimationFrame(() => {
+        if (token !== turtlePlayback) return;
+        onDone();
+      });
+    }
     return;
   }
   const span = frames.length - startIndex;
@@ -369,6 +405,11 @@ function drawTurtleFrame(canvas, scene, frame) {
   ctx.fillRect(0, 0, width, height);
   const lines = Array.isArray(scene.lines) ? scene.lines : [];
   const count = frame && typeof frame.lineCount === "number" ? frame.lineCount : 0;
+  const turtles = frame && Array.isArray(frame.turtles) ? frame.turtles : [];
+  turtles.forEach((turtle) => {
+    if (!turtle || turtle.visible === false || !isImageTurtle(turtle)) return;
+    drawOneTurtle(ctx, width, height, turtle);
+  });
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   for (let i = 0; i < count && i < lines.length; i += 1) {
@@ -380,14 +421,43 @@ function drawTurtleFrame(canvas, scene, frame) {
     ctx.lineTo(width / 2 + line.x2, height / 2 - line.y2);
     ctx.stroke();
   }
-  const turtles = frame && Array.isArray(frame.turtles) ? frame.turtles : [];
+  const labels = Array.isArray(scene.labels) ? scene.labels : [];
+  const labelCount = frame && typeof frame.labelCount === "number" ? frame.labelCount : 0;
+  for (let i = 0; i < labelCount && i < labels.length; i += 1) {
+    drawLabel(ctx, width, height, labels[i]);
+  }
   turtles.forEach((turtle) => {
-    if (!turtle || turtle.visible === false) return;
+    if (!turtle || turtle.visible === false || isImageTurtle(turtle)) return;
     drawOneTurtle(ctx, width, height, turtle);
   });
 }
 
+function isImageTurtle(turtle) {
+  return turtle.image === true || shapeImages.has(turtle.shape);
+}
+
+function drawLabel(ctx, width, height, label) {
+  if (!label) return;
+  const align = label.align === "center" || label.align === "right" ? label.align : "left";
+  ctx.font = label.font || "8pt Arial";
+  ctx.fillStyle = label.color || "#000000";
+  ctx.textAlign = align;
+  ctx.textBaseline = "bottom";
+  const screenX = width / 2 + (Number(label.x) || 0);
+  const screenY = height / 2 - (Number(label.y) || 0);
+  ctx.fillText(String(label.text || ""), screenX, screenY);
+}
+
 function drawOneTurtle(ctx, width, height, turtle) {
+  const image = shapeImages.get(turtle.shape);
+  if (image || turtle.image === true) {
+    if (image) {
+      const screenX = width / 2 + (Number(turtle.x) || 0);
+      const screenY = height / 2 - (Number(turtle.y) || 0);
+      ctx.drawImage(image, screenX - image.width / 2, screenY - image.height / 2);
+    }
+    return;
+  }
   const heading = Number(turtle.heading) || 0;
   const radians = heading * Math.PI / 180;
   const e0 = Math.cos(radians);
@@ -474,7 +544,15 @@ function fillPicker() {
 function showSelectedFile() {
   const index = files.length > 1 ? Number(els.codePicker.value || 0) : 0;
   const file = files[index];
-  els.codeText.textContent = file ? file.text : "";
+  if (!file) {
+    els.codeText.textContent = "";
+    return;
+  }
+  if (file.bytes) {
+    els.codeText.textContent = file.name + " is an image file (" + file.bytes.length + " bytes).";
+    return;
+  }
+  els.codeText.textContent = file.text || "";
 }
 
 async function onCopy() {
@@ -519,6 +597,50 @@ async function loadText(url) {
     throw new Error("Couldn't find " + url + " (" + response.status + "). Check the path in projects.json.");
   }
   return response.text();
+}
+
+async function loadBytes(url) {
+  const response = await fetch(url, { cache: "no-cache" });
+  if (!response.ok) {
+    throw new Error("Couldn't find " + url + " (" + response.status + "). Check the path in projects.json.");
+  }
+  return new Uint8Array(await response.arrayBuffer());
+}
+
+function isBinaryFile(path) {
+  return BINARY_FILE.test(String(path || ""));
+}
+
+function sourceImportsPandas(source) {
+  return /(^|\n)\s*(import\s+pandas\b|from\s+pandas\s+import\b)/.test(String(source || ""));
+}
+
+function mimeFor(path) {
+  const ext = String(path || "").split(".").pop().toLowerCase();
+  if (ext === "jpg" || ext === "jpeg") return "image/jpeg";
+  if (ext === "png") return "image/png";
+  if (ext === "webp") return "image/webp";
+  if (ext === "bmp") return "image/bmp";
+  return "image/gif";
+}
+
+function decodeImage(bytes, mime) {
+  const blob = new Blob([bytes], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const image = new Image();
+  image.src = url;
+  return image.decode().then(() => image);
+}
+
+async function prepareShapeImages(loaded) {
+  const images = new Map();
+  for (const file of loaded) {
+    if (!file || !file.bytes || !file.path || !isBinaryFile(file.path)) continue;
+    const image = await decodeImage(file.bytes, mimeFor(file.path));
+    images.set(file.path, image);
+    images.set(baseName(file.path), image);
+  }
+  return images;
 }
 
 function writeFs(pyodide, path, text) {

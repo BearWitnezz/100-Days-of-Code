@@ -547,6 +547,11 @@ h1 {
   background: #ffffff;
 }
 
+/* The states map is 725px wide. Give it its own width so the names stay readable. */
+body[data-project="us-states-game"] .turtle-stage {
+  width: min(749px, 100%);
+}
+
 .terminal {
   position: relative;
   margin-top: 18px;
