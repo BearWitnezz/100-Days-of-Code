@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turtle Crossing</title>
+  <meta name="description" content="Walk the turtle to the top. The cars get faster every time you make it across.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Crect x='9' y='6' width='6' height='3' fill='%23e33'/%3E%3Cellipse cx='6' cy='8' rx='3' ry='2' fill='%23111'/%3E%3C/svg%3E">
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px;
+      background: #ececec;
+      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    h1 { margin: 0; font-size: 22px; font-weight: 700; }
+    .stage { width: min(100%, 600px, calc(100vh - 180px)); }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+      border: 2px solid #bdbdbd;
+      touch-action: none;
+    }
+    .hint { margin: 0; font-size: 15px; text-align: center; }
+    button {
+      min-width: 88px;
+      min-height: 48px;
+      padding: 10px 16px;
+      border: 1px solid #888;
+      border-bottom-width: 3px;
+      border-radius: 8px;
+      background: #f4f4f4;
+      color: #111;
+      font: 700 15px Arial, sans-serif;
+      touch-action: manipulation;
+      user-select: none;
+    }
+    button:active { border-bottom-width: 1px; transform: translateY(2px); }
+    button:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <h1>Turtle Crossing</h1>
+  <div class="stage">
+    <canvas id="screen" width="600" height="600" aria-label="Turtle crossing"></canvas>
+  </div>
+  <p class="hint">Press Up to move the turtle forward.</p>
+  <button type="button" id="up">Up</button>
+  <script>
+    "use strict";
+
+    var VIEW = 600;
+    var COLORS = ["red", "orange", "yellow", "green", "blue", "purple"];
+    var canvas = document.getElementById("screen");
+    var ctx = canvas.getContext("2d");
+    var player = { x: 0, y: -280 };
+    var cars = [];
+    var speed = 5;
+    var level = 1;
+    var running = true;
+    var gameOver = false;
+    var timer = 0;
+
+    function sx(x) { return VIEW / 2 + x; }
+    function sy(y) { return VIEW / 2 - y; }
+
+    function randint(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function goUp() {
+      if (!running) return;
+      player.y += 10;
+      draw();
+    }
+
+    function tick() {
+      var hit = false;
+      var i;
+      if (!running) return;
+      if (randint(1, 6) === 5) {
+        cars.push({
+          x: 300,
+          y: randint(-250, 250),
+          color: COLORS[randint(0, COLORS.length - 1)]
+        });
+      }
+      for (i = 0; i < cars.length; i += 1) cars[i].x -= speed;
+      cars = cars.filter(function (car) { return car.x > -80; });
+      for (i = 0; i < cars.length; i += 1) {
+        if (Math.hypot(player.x - cars[i].x, player.y - cars[i].y) < 20) hit = true;
+      }
+      if (hit) {
+        running = false;
+        gameOver = true;
+      }
+      if (player.y > 280) {
+        player.x = 0;
+        player.y = -280;
+        speed += 10;
+        level += 1;
+        gameOver = false;
+      }
+      if (hit) running = false;
+      draw();
+      if (running) timer = window.setTimeout(tick, 100);
+    }
+
+    function drawTurtle(x, y) {
+      ctx.save();
+      ctx.translate(sx(x), sy(y));
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillStyle = "#111111";
+      [[3, 5.4], [3, -5.4], [-5, 5], [-5, -5]].forEach(function (leg) {
+        ctx.beginPath();
+        ctx.ellipse(leg[0], leg[1], 4, 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.beginPath();
+      ctx.moveTo(-7, 0);
+      ctx.lineTo(-13, 2);
+      ctx.lineTo(-13, -2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 8, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(9, 0, 3.2, 2.6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function draw() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (canvas.width !== Math.round(VIEW * dpr)) {
+        canvas.width = Math.round(VIEW * dpr);
+        canvas.height = Math.round(VIEW * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, VIEW, VIEW);
+      cars.forEach(function (car) {
+        ctx.fillStyle = car.color;
+        ctx.fillRect(sx(car.x) - 20, sy(car.y) - 10, 40, 20);
+      });
+      drawTurtle(player.x, player.y);
+      ctx.fillStyle = "#000000";
+      ctx.font = "24pt Courier, monospace";
+      ctx.textBaseline = "alphabetic";
+      ctx.textAlign = "left";
+      ctx.fillText("Level: " + level, sx(-280), sy(250));
+      if (gameOver) {
+        ctx.textAlign = "center";
+        ctx.fillText("GAME OVER", sx(0), sy(0));
+      }
+    }
+
+    var upButton = document.getElementById("up");
+    var repeat = 0;
+    function stopRepeat() {
+      if (!repeat) return;
+      window.clearInterval(repeat);
+      repeat = 0;
+    }
+    upButton.addEventListener("pointerdown", function (event) {
+      event.preventDefault();
+      try { upButton.setPointerCapture(event.pointerId); } catch (err) { /* pointer already gone */ }
+      goUp();
+      stopRepeat();
+      repeat = window.setInterval(goUp, 50);
+    });
+    upButton.addEventListener("pointerup", stopRepeat);
+    upButton.addEventListener("pointercancel", stopRepeat);
+
+    draw();
+    timer = window.setTimeout(tick, 100);
+    window.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        goUp();
+      }
+    });
+  </script>
+</body>
+</html>

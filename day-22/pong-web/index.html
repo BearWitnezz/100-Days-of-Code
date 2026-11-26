@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pong</title>
+  <meta name="description" content="Bounce the ball past the other paddle. Up and Down move the right side. W and S move the left.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Crect x='2' y='4' width='2' height='8' fill='%23fff'/%3E%3Crect x='12' y='4' width='2' height='8' fill='%23fff'/%3E%3Ccircle cx='8' cy='8' r='1.4' fill='%23fff'/%3E%3C/svg%3E">
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px;
+      background: #111;
+      color: #f2f2f2;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    h1 { margin: 0; font-size: 22px; font-weight: 700; }
+    .stage { width: min(100%, 800px, calc((100vh - 270px) * 4 / 3)); }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #000;
+      border: 2px solid #555;
+      touch-action: none;
+    }
+    .hint { margin: 0; font-size: 15px; color: #d0d0d0; text-align: center; }
+    .pads {
+      width: min(100%, 800px);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .pad { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .pad p { margin: 0; font-size: 14px; color: #d0d0d0; }
+    button {
+      min-width: 76px;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid #888;
+      border-bottom-width: 3px;
+      border-radius: 8px;
+      background: #f4f4f4;
+      color: #111;
+      font: 700 15px Arial, sans-serif;
+      touch-action: manipulation;
+      user-select: none;
+    }
+    button:active { border-bottom-width: 1px; transform: translateY(2px); }
+    button:focus-visible { outline: 3px solid #8ab4ff; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <h1>Pong</h1>
+  <div class="stage">
+    <canvas id="screen" width="800" height="600" aria-label="Pong"></canvas>
+  </div>
+  <p class="hint">W and S move the left paddle. Up and Down move the right paddle.</p>
+  <div class="pads">
+    <div class="pad">
+      <p>Left</p>
+      <button type="button" id="left-up">W</button>
+      <button type="button" id="left-down">S</button>
+    </div>
+    <div class="pad">
+      <p>Right</p>
+      <button type="button" id="right-up">Up</button>
+      <button type="button" id="right-down">Down</button>
+    </div>
+  </div>
+  <script>
+    "use strict";
+
+    var WIDTH = 800;
+    var HEIGHT = 600;
+    var canvas = document.getElementById("screen");
+    var ctx = canvas.getContext("2d");
+    var left = { x: -350, y: 0 };
+    var right = { x: 350, y: 0 };
+    var ball = { x: 0, y: 0, xMove: 10, yMove: 10, moveSpeed: 0.1 };
+    var leftScore = 0;
+    var rightScore = 0;
+    var timer = 0;
+
+    function sx(x) { return WIDTH / 2 + x; }
+    function sy(y) { return HEIGHT / 2 - y; }
+
+    function draw() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (canvas.width !== Math.round(WIDTH * dpr)) {
+        canvas.width = Math.round(WIDTH * dpr);
+        canvas.height = Math.round(HEIGHT * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, WIDTH, HEIGHT);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(sx(left.x) - 10, sy(left.y) - 50, 20, 100);
+      ctx.fillRect(sx(right.x) - 10, sy(right.y) - 50, 20, 100);
+      ctx.beginPath();
+      ctx.arc(sx(ball.x), sy(ball.y), 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.font = "80pt Courier, monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText(String(leftScore), sx(-100), sy(200));
+      ctx.fillText(String(rightScore), sx(100), sy(200));
+    }
+
+    function resetBall() {
+      ball.x = 0;
+      ball.y = 0;
+      ball.xMove *= -1;
+      ball.moveSpeed *= 0.9;
+      ball.moveSpeed = 0.1;
+    }
+
+    function step() {
+      var hitRight, hitLeft;
+      ball.x += ball.xMove;
+      ball.y += ball.yMove;
+      if (ball.y > 280 || ball.y < -280) ball.yMove *= -1;
+      hitRight = Math.hypot(ball.x - right.x, ball.y - right.y) < 50 && ball.x > 320;
+      hitLeft = Math.hypot(ball.x - left.x, ball.y - left.y) < 50 && ball.x < -320;
+      if (hitRight || hitLeft) {
+        ball.xMove *= -1;
+        ball.moveSpeed *= 0.9;
+      }
+      if (ball.x > 400) {
+        resetBall();
+        leftScore += 1;
+      }
+      if (ball.x < -400) {
+        resetBall();
+        rightScore += 1;
+      }
+    }
+
+    function frame() {
+      step();
+      draw();
+      timer = window.setTimeout(frame, ball.moveSpeed * 1000);
+    }
+
+    function nudge(paddle, amount) {
+      paddle.y += amount;
+      draw();
+    }
+
+    function bindHold(id, paddle, amount) {
+      var button = document.getElementById(id);
+      var repeat = 0;
+      function stop() {
+        if (!repeat) return;
+        window.clearInterval(repeat);
+        repeat = 0;
+      }
+      button.addEventListener("pointerdown", function (event) {
+        event.preventDefault();
+        try { button.setPointerCapture(event.pointerId); } catch (err) { /* pointer already gone */ }
+        nudge(paddle, amount);
+        stop();
+        repeat = window.setInterval(function () { nudge(paddle, amount); }, 50);
+      });
+      button.addEventListener("pointerup", stop);
+      button.addEventListener("pointercancel", stop);
+    }
+
+    draw();
+    timer = window.setTimeout(frame, ball.moveSpeed * 1000);
+
+    window.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowUp") { event.preventDefault(); nudge(right, 20); }
+      else if (event.key === "ArrowDown") { event.preventDefault(); nudge(right, -20); }
+      else if (event.key === "w" || event.key === "W") nudge(left, 20);
+      else if (event.key === "s" || event.key === "S") nudge(left, -20);
+    });
+    bindHold("left-up", left, 20);
+    bindHold("left-down", left, -20);
+    bindHold("right-up", right, 20);
+    bindHold("right-down", right, -20);
+  </script>
+</body>
+</html>

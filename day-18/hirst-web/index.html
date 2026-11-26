@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hirst Painting</title>
+  <meta name="description" content="A 10 by 10 spot painting using the colors from the Day 18 Hirst picture.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='5' cy='6' r='2' fill='%23225'/%3E%3Ccircle cx='11' cy='6' r='2' fill='%23c33'/%3E%3Ccircle cx='5' cy='11' r='2' fill='%23db3'/%3E%3Ccircle cx='11' cy='11' r='2' fill='%23284'/%3E%3C/svg%3E">
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px;
+      background: #ececec;
+      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .stage { width: min(100%, 600px, calc(100vh - 140px)); }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+      border: 2px solid #bdbdbd;
+    }
+    p {
+      margin: 0;
+      max-width: 36rem;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hirst Painting</h1>
+  <div class="stage">
+    <canvas id="painting" width="600" height="600" aria-label="Ten by ten grid of colored spots"></canvas>
+  </div>
+  <p>Ten rows of ten spots. Refresh the page to paint it again.</p>
+  <script>
+    "use strict";
+
+    // Same RGB list as day-18/main.py. Each spot is 20px, 50px apart, from (-255, -255).
+    var COLORS = [
+      [133, 164, 202], [225, 150, 101], [30, 43, 64], [201, 136, 148], [163, 59, 49],
+      [236, 212, 88], [44, 101, 147], [136, 181, 161], [148, 64, 72], [51, 41, 45],
+      [161, 32, 29], [60, 115, 99], [59, 48, 45], [170, 29, 32], [215, 83, 73],
+      [236, 167, 157], [230, 163, 168], [36, 61, 55], [15, 96, 71], [33, 60, 106]
+    ];
+
+    var VIEW = 600;
+    var canvas = document.getElementById("painting");
+    var ctx = canvas.getContext("2d");
+
+    function sx(x) { return VIEW / 2 + x; }
+    function sy(y) { return VIEW / 2 - y; }
+
+    function paint() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(VIEW * dpr);
+      canvas.height = Math.round(VIEW * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, VIEW, VIEW);
+      var row, col, y, x, color;
+      for (row = 0; row < 10; row += 1) {
+        y = -255 + row * 50;
+        for (col = 0; col < 10; col += 1) {
+          x = -255 + col * 50;
+          color = COLORS[Math.floor(Math.random() * COLORS.length)];
+          ctx.fillStyle = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+          ctx.beginPath();
+          ctx.arc(sx(x), sy(y), 10, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    paint();
+  </script>
+</body>
+</html>

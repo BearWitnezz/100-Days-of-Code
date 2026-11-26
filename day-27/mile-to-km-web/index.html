@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mile to Km Converter</title>
+  <meta name="description" content="Type a distance in miles and convert it to kilometers.">
+  <meta name="theme-color" content="#d9d9d9">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23d9d9d9'/%3E%3Ctext x='1' y='12' font-size='9' font-family='Arial' fill='%23000'%3Ekm%3C/text%3E%3C/svg%3E">
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #bfbfbf;
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .window {
+      max-width: 100%;
+      padding: 20px;
+      background: #d9d9d9;
+      border: 1px solid #8e8e8e;
+      box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #6d6d6d inset;
+    }
+    form {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      column-gap: 12px;
+      row-gap: 10px;
+      align-items: center;
+      justify-items: center;
+    }
+    label, output, .unit {
+      font: 700 24pt Arial, Helvetica, sans-serif;
+    }
+    @media (max-width: 560px) {
+      label, output, .unit { font-size: 18pt; }
+      form { column-gap: 8px; }
+    }
+    input {
+      width: 7.5em;
+      min-height: 44px;
+      padding: 4px 6px;
+      border: 1px solid #7a7a7a;
+      background: #fff;
+      color: #000;
+      font: 14pt Arial, Helvetica, sans-serif;
+      text-align: center;
+    }
+    button {
+      min-height: 44px;
+      padding: 6px 16px;
+      border: 1px solid #7a7a7a;
+      background: #e6e6e6;
+      color: #000;
+      font: 14px Arial, Helvetica, sans-serif;
+    }
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid #1d4ed8;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <form id="converter">
+      <span></span>
+      <input id="miles" name="miles" inputmode="decimal" autocomplete="off" aria-label="Miles">
+      <label for="miles">Miles</label>
+      <span class="unit">is equal to</span>
+      <output id="result" for="miles">0</output>
+      <span class="unit">Km</span>
+      <span></span>
+      <button type="submit">Calculate</button>
+      <span></span>
+    </form>
+  </div>
+  <script>
+    "use strict";
+
+    var form = document.getElementById("converter");
+    var milesInput = document.getElementById("miles");
+    var result = document.getElementById("result");
+
+    // Python 3 round() with no ndigits: half goes to the even integer.
+    function pythonRound(value) {
+      var negative = value < 0;
+      var absValue = Math.abs(value);
+      var floor = Math.floor(absValue);
+      var fraction = absValue - floor;
+      var whole;
+      if (Math.abs(fraction - 0.5) < 1e-9) whole = floor % 2 === 0 ? floor : floor + 1;
+      else if (fraction > 0.5) whole = floor + 1;
+      else whole = floor;
+      return negative ? -whole : whole;
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var miles = parseFloat(milesInput.value);
+      if (!isFinite(miles)) return;
+      result.textContent = String(pythonRound(miles * 1.609));
+    });
+  </script>
+</body>
+</html>
