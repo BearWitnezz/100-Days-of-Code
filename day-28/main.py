@@ -1,30 +1,30 @@
-# TODO 1: Switch the canvas from pack() to grid(). Middle column, second row. (done)
-# TODO 2: Title label "Timer" on the top row, middle column. Which keyword colors the text green? (done)
-# TODO 3: Make the title big (FONT_NAME, 50) and blend it into the window. What does bg do? (done)
-# TODO 4: Start button, left column, the row under the canvas. (done)
-# TODO 5: Reset button, right column, same row as Start. (done)
-# TODO 6: Get rid of the white border around the buttons. Same trick as the canvas. (done)
-# TODO 7: Check mark label on the bottom row, middle column. Paste a ✔ as its text, green on yellow. (done)
-# TODO 8: Save the canvas text in a variable so you can change it later. (done)
-# TODO 9: count_down(count) in COUNTDOWN MECHANISM. Update the canvas text to count. Label uses config... what does a canvas use? (done)
-# TODO 10: Make it loop with window.after. Wait 1 second, then call itself with one less. (done)
-# TODO 11: Stop it at 0 so it doesn't go negative. (done)
-# TODO 12: start_timer() in TIMER MECHANISM that kicks off count_down. Hook it to the Start button (parentheses or not?). (done)
-# TODO 13: Count down minutes instead of seconds. How many seconds in a minute? (done)
-# TODO 14: Show it as minutes:seconds. Which math function chops off decimals, and which operator gives the leftover seconds? (done)
-# TODO 15: Make the seconds always show two digits (5:00, 4:09, 0:07). When is a number "too short", and how can an f-string add a 0 in front? (done)
-# TODO 16: Make a global reps = 0. Bump it by 1 every time start_timer runs. What keyword lets a function change it? (done)
-# TODO 17: Work out the work, short break, and long break seconds from your constants. (done)
-# TODO 18: Pick which one to count down. Rep 8 = long break, even reps = short break, everything else = work. Which check has to go first? (done)
-# TODO 19: When the countdown hits 0, start the next session on its own. (done)
-# TODO 20: Change the title text and color for each session: Work green, short Break pink, long Break red. (done)
-# TODO 21: Make the check mark label start out empty. (done)
-# TODO 22: When a countdown hits 0, add one ✔ for every finished work session. How many reps make one work session? (done)
-# TODO 23: reset_timer() in TIMER RESET, hooked to the Reset button (parentheses or not?). (done)
-# TODO 24: Stop the running timer. Save what window.after gives back in a variable, then cancel it. Where does that variable need to live? (done)
-# TODO 25: Put the timer text, title, and check marks back to how they started. (done)
-# TODO 26: Hit Reset mid-timer, then Start. Does it start on Work? If not, what didn't reset? (done)
-# TODO 27: Put your real minutes back (25, 5, 20). (done)
+# TODO 1: Switch the canvas from pack() to grid(). Middle column, second row.
+# TODO 2: Title label "Timer" on the top row, middle column. Which keyword colors the text green?
+# TODO 3: Make the title big (FONT_NAME, 50) and blend it into the window. What does bg do?
+# TODO 4: Start button, left column, the row under the canvas.
+# TODO 5: Reset button, right column, same row as Start.
+# TODO 6: Get rid of the white border around the buttons. Same trick as the canvas.
+# TODO 7: Check mark label on the bottom row, middle column. Paste a ✔ as its text, green on yellow.
+# TODO 8: Save the canvas text in a variable so you can change it later.
+# TODO 9: count_down(count) in COUNTDOWN MECHANISM. Update the canvas text to count. Label uses config... what does a canvas use?
+# TODO 10: Make it loop with window.after. Wait 1 second, then call itself with one less.
+# TODO 11: Stop it at 0 so it doesn't go negative.
+# TODO 12: start_timer() in TIMER MECHANISM that kicks off count_down. Hook it to the Start button (parentheses or not?).
+# TODO 13: Count down minutes instead of seconds. How many seconds in a minute?
+# TODO 14: Show it as minutes:seconds. Which math function chops off decimals, and which operator gives the leftover seconds?
+# TODO 15: Make the seconds always show two digits (5:00, 4:09, 0:07). When is a number "too short", and how can an f-string add a 0 in front?
+# TODO 16: Make a global reps = 0. Bump it by 1 every time start_timer runs. What keyword lets a function change it?
+# TODO 17: Work out the work, short break, and long break seconds from your constants.
+# TODO 18: Pick which one to count down. Rep 8 = long break, even reps = short break, everything else = work. Which check has to go first?
+# TODO 19: When the countdown hits 0, start the next session on its own.
+# TODO 20: Change the title text and color for each session: Work green, short Break pink, long Break red.
+# TODO 21: Make the check mark label start out empty.
+# TODO 22: When a countdown hits 0, add one ✔ for every finished work session. How many reps make one work session?
+# TODO 23: reset_timer() in TIMER RESET, hooked to the Reset button (parentheses or not?).
+# TODO 24: Stop the running timer. Save what window.after gives back in a variable, then cancel it. Where does that variable need to live?
+# TODO 25: Put the timer text, title, and check marks back to how they started.
+# TODO 26: Hit Reset mid-timer, then Start. Does it start on Work? If not, what didn't reset?
+# TODO 27: Put your real minutes back (25, 5, 20).
 
 from tkinter import *
 import math
