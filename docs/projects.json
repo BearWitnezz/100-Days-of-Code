@@ -182,6 +182,33 @@
       "accent": "#f0abfc"
     },
     {
+      "id": "pong",
+      "title": "Pong",
+      "day": 22,
+      "description": "Bounce the ball past the other paddle and run up the score.",
+      "howToPlay": "Up and Down move the right paddle. W and S move the left paddle.",
+      "href": "../day-22/pong-web/",
+      "accent": "#a78bfa"
+    },
+    {
+      "id": "turtle-crossing",
+      "title": "Turtle Crossing",
+      "day": 23,
+      "description": "Walk the turtle to the top. The cars speed up every time you make it across.",
+      "howToPlay": "Press Up, or the Up button, to move the turtle forward.",
+      "href": "../day-23/turtle-crossing-web/",
+      "accent": "#fb7185"
+    },
+    {
+      "id": "snake",
+      "title": "Snake",
+      "day": 24,
+      "description": "Steer the white snake to the blue food. A crash saves your best score and starts you over.",
+      "howToPlay": "Arrow keys steer. On a phone, use the arrow buttons. The best score stays on this browser.",
+      "href": "../day-24/snake-high-score-web/",
+      "accent": "#38bdf8"
+    },
+    {
       "id": "us-states-game",
       "title": "U.S. States Game",
       "day": 25,
@@ -194,15 +221,6 @@
       ],
       "accent": "#86efac",
       "playable": true
-    },
-    {
-      "id": "pomodoro",
-      "title": "Pomodoro",
-      "day": 28,
-      "description": "Work for 25 minutes, take a break, and collect a check for every session you finish.",
-      "howToPlay": "Press Start. A short break is 5 minutes. Every fourth work session is followed by a 20 minute break. Press Reset to stop.",
-      "href": "pomodoro/",
-      "accent": "#e7305b"
     }
   ]
 }
