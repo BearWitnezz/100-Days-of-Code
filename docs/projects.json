@@ -173,15 +173,6 @@
       "accent": "#c084fc"
     },
     {
-      "id": "hirst-painting",
-      "title": "Hirst Painting",
-      "day": 18,
-      "description": "Paint a 10 by 10 grid of spots in the colors from the Hirst picture.",
-      "howToPlay": "Nothing to type. The painting appears when the page opens. Refresh for a new one.",
-      "href": "../day-18/hirst-web/",
-      "accent": "#f4a261"
-    },
-    {
       "id": "turtle-race",
       "title": "Turtle Race",
       "day": 19,
