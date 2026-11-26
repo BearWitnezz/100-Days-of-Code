@@ -118,9 +118,9 @@ https://bearwitnezz.github.io/100-Days-of-Code/docs/
 
 Leave the folder on **/ (root)**. Do not switch it to `/docs`. The `/docs` choice uploads only this folder and leaves the `.py` files behind, so the games cannot start.
 
-The flashcards stay at:
+The flashcards are at:
 
-https://bearwitnezz.github.io/100-Days-of-Code/flashcards/
+https://bearwitnezz.github.io/100-Days-of-Code/docs/flashcards/
 
 If that flashcards link already works, Pages is already on. After this arcade is on the `main` branch, open the `docs/` address above. You do not create a second site.
 

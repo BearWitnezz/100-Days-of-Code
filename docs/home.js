@@ -45,7 +45,7 @@ function render(projects) {
 function cardFor(project, index) {
   const link = document.createElement("a");
   link.className = "card";
-  link.href = "play.html?id=" + encodeURIComponent(project.id);
+  link.href = appHref(project) || ("play.html?id=" + encodeURIComponent(project.id));
   link.style.setProperty("--accent", safeColor(project.accent, index));
   link.dataset.projectId = project.id;
   if (typeof project.day === "number") link.dataset.day = String(project.day);
@@ -74,6 +74,14 @@ function cardFor(project, index) {
 
 function isPlayable(project) {
   return project.playable !== false;
+}
+
+function appHref(project) {
+  const href = project && project.href;
+  if (typeof href !== "string" || href === "") return "";
+  if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("//") || /[\\\s]/.test(href)) return "";
+  if (!/^[A-Za-z0-9._~/-]+$/.test(href)) return "";
+  return href;
 }
 
 function safeColor(value, index) {

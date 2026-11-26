@@ -194,6 +194,15 @@
       ],
       "accent": "#86efac",
       "playable": true
+    },
+    {
+      "id": "pomodoro",
+      "title": "Pomodoro",
+      "day": 28,
+      "description": "Work for 25 minutes, take a break, and collect a check for every session you finish.",
+      "howToPlay": "Press Start. A short break is 5 minutes. Every fourth work session is followed by a 20 minute break. Press Reset to stop.",
+      "href": "pomodoro/",
+      "accent": "#e7305b"
     }
   ]
 }

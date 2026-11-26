@@ -112,6 +112,11 @@ async function init() {
       fail("That game isn't in the list. Head back and pick another card.");
       return;
     }
+    const href = appHref(project);
+    if (href) {
+      window.location.replace(href);
+      return;
+    }
     paintHeading();
     files = await loadFiles(project);
     shapeImages = await prepareShapeImages(files);
@@ -679,6 +684,14 @@ function prettyPath(entry) {
 function baseName(path) {
   const parts = String(path || "").split("/");
   return parts[parts.length - 1] || "game.py";
+}
+
+function appHref(project) {
+  const href = project && project.href;
+  if (typeof href !== "string" || href === "") return "";
+  if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("//") || /[\\\s]/.test(href)) return "";
+  if (!/^[A-Za-z0-9._~/-]+$/.test(href)) return "";
+  return href;
 }
 
 function safeHttpUrl(value) {
