@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pomodoro</title>
+  <meta name="description" content="A 25 minute Pomodoro timer with short breaks, a long break every four work sessions, and a check mark for each one you finish.">
+  <meta name="theme-color" content="#f7f5dd">
+  <link rel="icon" href="tomato.png">
+  <style>
+    :root {
+      --yellow: #f7f5dd;
+      --green: #9bdeac;
+      --pink: #e2979c;
+      --red: #e7305b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { color-scheme: light; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--yellow);
+      color: #222;
+      font-family: Courier, "Courier New", monospace;
+      padding:
+        env(safe-area-inset-top)
+        env(safe-area-inset-right)
+        env(safe-area-inset-bottom)
+        env(safe-area-inset-left);
+    }
+
+    .app {
+      width: min(440px, 100%);
+      padding: 50px 20px 40px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      text-align: center;
+      font-family: Courier, "Courier New", monospace;
+      font-size: 50px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--green);
+    }
+
+    .face {
+      position: relative;
+      width: 200px;
+      height: 224px;
+      margin: 0 auto;
+    }
+
+    .face img {
+      display: block;
+      width: 200px;
+      height: 223px;
+      margin-top: 1px;
+    }
+
+    #time {
+      position: absolute;
+      left: 50%;
+      top: calc(130 / 224 * 100%);
+      transform: translate(-50%, -50%);
+      margin: 0;
+      color: #fff;
+      font-family: Courier, "Courier New", monospace;
+      font-size: 35px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0;
+      user-select: none;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: min(100%, 360px);
+      margin: 18px auto 0;
+      gap: 16px;
+    }
+
+    button {
+      flex: 0 0 auto;
+      min-width: 96px;
+      min-height: 48px;
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 4px;
+      background: #f3f3f3;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
+      color: #1a1a1a;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:hover { background: #e7e7e7; }
+
+    button:active { transform: translateY(1px); }
+
+    button:focus-visible {
+      outline: 3px solid #333;
+      outline-offset: 3px;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.55;
+      transform: none;
+    }
+
+    #checks {
+      min-height: 1.5em;
+      margin: 16px 0 0;
+      text-align: center;
+      color: var(--green);
+      font-family: Courier, "Courier New", monospace;
+      font-size: 24px;
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 380px) {
+      .app { padding: 32px 16px 28px; }
+      .controls { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1 id="title">Timer</h1>
+    <div class="face" id="timer" role="timer" aria-label="Timer, 00:00">
+      <img src="tomato.png" alt="" width="200" height="223">
+      <p id="time">00:00</p>
+    </div>
+    <div class="controls">
+      <button type="button" id="start">Start</button>
+      <button type="button" id="reset">Reset</button>
+    </div>
+    <p id="checks"></p>
+    <p id="status" class="sr-only" aria-live="polite"></p>
+  </main>
+  <noscript>This timer needs JavaScript. Turn it on, then refresh.</noscript>
+  <script>
+    "use strict";
+
+    const PINK = "#e2979c";
+    const RED = "#e7305b";
+    const GREEN = "#9bdeac";
+    const WORK_MIN = 25;
+    const SHORT_BREAK_MIN = 5;
+    const LONG_BREAK_MIN = 20;
+
+    const titleEl = document.getElementById("title");
+    const timeEl = document.getElementById("time");
+    const timerEl = document.getElementById("timer");
+    const checksEl = document.getElementById("checks");
+    const statusEl = document.getElementById("status");
+    const startBtn = document.getElementById("start");
+    const resetBtn = document.getElementById("reset");
+
+    let reps = 0;
+    let marks = "";
+    let running = false;
+    let sessionEndsAt = 0;
+    let timeoutId = 0;
+    let audioCtx = null;
+    let wakeLock = null;
+
+    startBtn.addEventListener("click", onStart);
+    resetBtn.addEventListener("click", onReset);
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", onVisible);
+
+    function sessionFor(rep) {
+      if (rep % 8 === 0) {
+        return { name: "Break", color: RED, seconds: LONG_BREAK_MIN * 60, kind: "long" };
+      }
+      if (rep % 2 === 0) {
+        return { name: "Break", color: PINK, seconds: SHORT_BREAK_MIN * 60, kind: "short" };
+      }
+      return { name: "Work", color: GREEN, seconds: WORK_MIN * 60, kind: "work" };
+    }
+
+    function onStart() {
+      if (running) return;
+      running = true;
+      startBtn.disabled = true;
+      unlockAudio();
+      requestNotify();
+      acquireWakeLock();
+      reps = 0;
+      marks = "";
+      checksEl.textContent = "";
+      sessionEndsAt = Date.now();
+      beginNextSession();
+      statusEl.textContent = describe(sessionFor(reps));
+      render();
+      arm();
+    }
+
+    function onReset() {
+      running = false;
+      window.clearTimeout(timeoutId);
+      timeoutId = 0;
+      reps = 0;
+      marks = "";
+      sessionEndsAt = 0;
+      checksEl.textContent = "";
+      titleEl.textContent = "Timer";
+      titleEl.style.color = GREEN;
+      timeEl.textContent = "00:00";
+      timerEl.setAttribute("aria-label", "Timer, 00:00");
+      document.title = "Pomodoro";
+      startBtn.disabled = false;
+      statusEl.textContent = "Timer reset.";
+      releaseWakeLock();
+    }
+
+    function beginNextSession() {
+      reps += 1;
+      const session = sessionFor(reps);
+      sessionEndsAt += session.seconds * 1000;
+      titleEl.textContent = session.name;
+      titleEl.style.color = session.color;
+    }
+
+    function tick() {
+      if (!running) return;
+      window.clearTimeout(timeoutId);
+      const now = Date.now();
+      let ended = 0;
+      let lastEndedRep = 0;
+      while (running && now >= sessionEndsAt && ended < 500) {
+        lastEndedRep = reps;
+        beginNextSession();
+        if (reps % 2 === 0) marks += "✔";
+        ended += 1;
+      }
+      if (ended > 0) {
+        checksEl.textContent = marks;
+        statusEl.textContent = describe(sessionFor(reps));
+        signalSessionEnd(lastEndedRep, ended);
+      }
+      render();
+      arm();
+    }
+
+    function arm() {
+      window.clearTimeout(timeoutId);
+      if (!running) return;
+      const msLeft = sessionEndsAt - Date.now();
+      if (msLeft <= 0) {
+        timeoutId = window.setTimeout(tick, 0);
+        return;
+      }
+      const remainder = msLeft % 1000;
+      const delay = remainder === 0 ? 1000 : remainder;
+      timeoutId = window.setTimeout(tick, delay);
+    }
+
+    function render() {
+      if (!running) {
+        timeEl.textContent = "00:00";
+        document.title = "Pomodoro";
+        timerEl.setAttribute("aria-label", "Timer, 00:00");
+        return;
+      }
+      const msLeft = Math.max(0, sessionEndsAt - Date.now());
+      const text = formatTime(Math.ceil(msLeft / 1000));
+      const session = sessionFor(reps);
+      timeEl.textContent = text;
+      document.title = text + " · " + session.name;
+      const spoken = session.kind === "long" ? "Long break" : session.name;
+      timerEl.setAttribute("aria-label", spoken + ", " + text);
+    }
+
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const secText = seconds < 10 ? "0" + seconds : String(seconds);
+      return minutes + ":" + secText;
+    }
+
+    function describe(session) {
+      if (session.kind === "long") return "Long break. 20 minutes.";
+      if (session.kind === "short") return "Break. 5 minutes.";
+      return "Work. 25 minutes.";
+    }
+
+    function signalSessionEnd(endedRep, endedCount) {
+      beep();
+      const ended = sessionFor(endedRep);
+      const current = sessionFor(reps);
+      let body;
+      if (endedCount > 1) {
+        body = "A few sessions finished while this tab was in the background. Now: " + describe(current);
+      } else if (ended.kind === "work") {
+        body = current.kind === "long"
+          ? "Work session finished. Long break started, 20 minutes."
+          : "Work session finished. Break started, 5 minutes.";
+      } else {
+        body = "Break's over. Work started, 25 minutes.";
+      }
+      const title = current.kind === "long" ? "Long break" : current.name;
+      notify(title, body);
+    }
+
+    function unlockAudio() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioCtx) audioCtx = new AudioCtx();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+    }
+
+    function beep() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audioCtx) audioCtx = new AudioCtx();
+      const play = () => {
+        const t = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, t);
+        osc.frequency.setValueAtTime(660, t + 0.12);
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
+        gain.gain.setValueAtTime(0.2, t + 0.16);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.34);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(t);
+        osc.stop(t + 0.36);
+      };
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume().then(play).catch(() => {});
+      } else {
+        try { play(); } catch (err) { /* autoplay can still block the ding */ }
+      }
+    }
+
+    function requestNotify() {
+      if (!("Notification" in window)) return;
+      if (Notification.permission !== "default") return;
+      try {
+        const pending = Notification.requestPermission();
+        if (pending && typeof pending.catch === "function") pending.catch(() => {});
+      } catch (err) { /* permission prompt is optional */ }
+    }
+
+    function notify(title, body) {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+      try {
+        const note = new Notification(title, {
+          body: body,
+          icon: "tomato.png",
+          tag: "pomodoro",
+          renotify: true
+        });
+        note.onclick = () => {
+          window.focus();
+          note.close();
+        };
+      } catch (err) { /* notifications stay optional */ }
+    }
+
+    function acquireWakeLock() {
+      if (!running || !navigator.wakeLock) return;
+      navigator.wakeLock.request("screen").then((lock) => {
+        wakeLock = lock;
+      }).catch(() => {});
+    }
+
+    function releaseWakeLock() {
+      if (!wakeLock) return;
+      const lock = wakeLock;
+      wakeLock = null;
+      lock.release().catch(() => {});
+    }
+
+    function onVisible() {
+      if (!running || document.visibilityState === "hidden") return;
+      unlockAudio();
+      acquireWakeLock();
+      tick();
+    }
+  </script>
+</body>
+</html>

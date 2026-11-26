@@ -9,7 +9,13 @@ Student of Dr. Angela Yu
 
 Flashcards and pop quizzes for the days I've finished:
 
-[https://bearwitnezz.github.io/100-Days-of-Code/flashcards/](https://bearwitnezz.github.io/100-Days-of-Code/flashcards/)
+[https://bearwitnezz.github.io/100-Days-of-Code/docs/flashcards/](https://bearwitnezz.github.io/100-Days-of-Code/docs/flashcards/)
+
+## Pomodoro
+
+The Day 28 timer, for work sessions:
+
+[https://bearwitnezz.github.io/100-Days-of-Code/docs/pomodoro/](https://bearwitnezz.github.io/100-Days-of-Code/docs/pomodoro/)
 
 ## Brick by Brick
 
