@@ -191,15 +191,6 @@
       "accent": "#f0abfc"
     },
     {
-      "id": "snake",
-      "title": "Snake",
-      "day": 21,
-      "description": "Steer the white snake to the blue food. Hitting the wall or your tail ends the game.",
-      "howToPlay": "Arrow keys steer. On a phone, use the Up, Down, Left, and Right buttons.",
-      "href": "../day-21/snake-web/",
-      "accent": "#4ade80"
-    },
-    {
       "id": "pong",
       "title": "Pong",
       "day": 22,
@@ -218,10 +209,10 @@
       "accent": "#fb7185"
     },
     {
-      "id": "snake-high-score",
-      "title": "Snake High Score",
+      "id": "snake",
+      "title": "Snake",
       "day": 24,
-      "description": "The same snake game, but a crash saves your best score and starts you over.",
+      "description": "Steer the white snake to the blue food. A crash saves your best score and starts you over.",
       "howToPlay": "Arrow keys steer. On a phone, use the arrow buttons. The best score stays on this browser.",
       "href": "../day-24/snake-high-score-web/",
       "accent": "#38bdf8"
@@ -239,15 +230,6 @@
       ],
       "accent": "#86efac",
       "playable": true
-    },
-    {
-      "id": "mile-to-km",
-      "title": "Mile to Km Converter",
-      "day": 27,
-      "description": "Type a distance in miles and turn it into kilometers.",
-      "howToPlay": "Type a number of miles, then press Calculate.",
-      "href": "../day-27/mile-to-km-web/",
-      "accent": "#2dd4bf"
     }
   ]
 }
